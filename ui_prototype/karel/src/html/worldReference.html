@@ -1,0 +1,158 @@
+
+
+<!-- The XHTML and PHP source for this page
+Copyright (c) 2004 Jeffrey Elkner
+Permission is granted to copy, distribute and/or modify this
+document under the terms of the GNU Free Documentation License,
+Version 1.2  or any later version published by the Free Software
+Foundation; with no Invariant Sections, with no Front-Cover Texts,
+and with no Back-Cover Texts. The full text of the license can be
+found at: http://www.gnu.org/copyleft/fdl.html
+
+This distribution includes a file named fdl.txt that contains the
+text of the GNU Free Documentation License.  If it is missing, you
+can obtain it from www.gnu.org or by writing to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Karel the Robot World Reference</title>
+<style type="text/css">
+a {
+    color: #0000aa;
+    background-color: #ffffff;
+}
+:visited {
+    color: #000077;
+    background-color: #ffffff;
+}
+body {
+    color: #000000;
+    background-color: #ffffff;
+    margin: 50px 50px 50px 50px;
+}
+h1 {
+    text-align: center;
+    color: #ba2326;
+    background-color: #ffffff;
+}
+img {
+    border: 0;
+}
+p {
+    text-align: justify;
+    font-size: 14px;
+}
+code, pre {
+    color: #050690;
+    background-color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+}
+.copyleft {
+    text-align: center;
+    font-size: small;
+}
+.buttons {
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Karel the Robot World Reference</h1>
+
+<h2>The Elements of the Karel World:</h2>
+<table>
+    <tr>
+        <td>The Robot</td>
+        <td>
+<!-- image="robot.png" -->
+        </td>
+    </tr>
+        <tr>
+        <td>Walls</td>
+        <td>
+<!-- image="wall.png" -->
+        </td>
+    </tr>
+        <tr>
+        <td>Beepers</td>
+        <td>
+<!-- image="beeper.png" -->
+        </td>
+    </tr>
+        </tr>
+        <tr>
+        <td>Rooms</td>
+        <td>
+<!-- image="room.png" -->
+        </td>
+    </tr>
+</table>
+
+<h2><br />Building the World Interactively</h2>
+<p>
+There are two different ways to construct the world in Karel the Robot. The
+ easiest way is to build it interactively by clicking inside the world grid.
+</p>
+<h3><br />Adding and Removing Walls</h3>
+<p>
+Left clicking between rooms allows you add walls between those rooms. Walls can
+ be removed by left clicking again after they are placed.
+<!-- image="walls.gif" -->
+</p>
+<h3><br />Adding and Removing Beepers</h3>
+<p>
+Right click in the center of a room to place a beeper stack. You can continue to right click
+ on the stack to increment the number of beepers in the stack. Each time you left click on a 
+ beeper stack, the number of beepers in the stack is decremented until the beeper stack is
+ completely removed. 
+<!-- image="beepers.gif" -->
+</p>
+
+<h2><br />Building the World Manually</h2>
+<p>
+Another way to construct the world is through the world editor. The world editor allows a
+ little bit more control over the world by allowing you to choose the starting location
+ of the robot. You can also change the amount of beepers the robot starts off with in its
+ beeper bag.
+</p>
+<h3><br />The World Editor</h3>
+<p>
+Each world editor instruction must be on a separate line. There are three possible instructions
+ that allow you to place walls, beeper stacks, and change the parameters regarding the robot.
+ For each instruction you specify the position in the grid of the room. When you place a beeper
+ stack, you must specify the number of beepers in the stack. When you specify a wall or the robot,
+ you must give a direction of <strong>N E S W</strong> to give the direction the wall or robot
+ faces. For the robot, you also give the number of beepers in the robot's beeper bag.
+</p>
+<h3><br />World Editor Instructions</h3>
+<p>
+The instructions take the following form:
+</p>
+<pre>
+robot &lt;horizontal position&gt; &lt;vertical position&gt; &lt;direction facing&gt; &lt;beepers in bag&gt;<br />
+wall &lt;horizontal position&gt; &lt;vertical position&gt; &lt;direction facing&gt;<br />
+beeper &lt;horizontal position&gt; &lt;vertical position&gt; &lt;number of beepers in stack&gt;<br />
+</pre>
+<p>
+The Load World button is used to construct the world from the instructions inside the world editor.
+</p>
+
+<h3><br />Example World Editor Instructions</h3>
+<p>
+The following shows an example of some world editor instructions along with the world it builds.
+</p>
+<!-- image="worldeditor.png" -->
+
+<p class="copyleft">
+<a href="http://www.gnu.org/copyleft/copyleft.html">
+Copyright</a> &copy; 2016 West Texas A&M University Computer Science
+</p>
+
+</body>
+</html>
+
