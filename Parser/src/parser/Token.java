@@ -35,10 +35,10 @@ public class Token {
     private static final Map<Integer, String> TOKEN_REGEX;
     static {
         TOKEN_REGEX = new HashMap<>();
-        TOKEN_REGEX.put(STATE, "\\w*");               // Match alphanumeric and _
+        TOKEN_REGEX.put(STATE, "\\w*");                // Match alphanumeric and _
         TOKEN_REGEX.put(SYMBOL, "\\p{Print}{1}");     // Match any one printable ASCII character
-        TOKEN_REGEX.put(DIRECTION, "(r|R|l|L|n|N)");  // Match either right, left, or no direction
-        TOKEN_REGEX.put(COMMENT, "\\s*#");            // Match white spaced followed by comment char
+        TOKEN_REGEX.put(DIRECTION, "(r|R|l|L|n|N)");   // Match either right, left, or no direction
+        TOKEN_REGEX.put(COMMENT, "\\s*#");           // Match white spaced followed by comment char
     }
 
     /**
