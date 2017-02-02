@@ -1,0 +1,7 @@
+
+
+state1 a a n state2
+state1 b _ r state1
+state1 c b l accept # Test comment
+
+# Another comment that should be ignored by parser
