@@ -11,18 +11,18 @@ package tm.view;
  */
 public class TextEditorFrame extends javax.swing.JFrame {
 
-    TMView karelView;
+    TMView tmView;
     /**
      * Creates new form TextEditorFrame
      */
-    public TextEditorFrame(javax.swing.JTabbedPane e1,javax.swing.JMenuBar m, TMView karelView) {
+    public TextEditorFrame(javax.swing.JTabbedPane e1,javax.swing.JMenuBar m, TMView tmView) {
         initComponents();
         add(e1);
         jMenuBar1.add(m);
         pack();
         setSize(400, 802);
         validate();
-        this.karelView = karelView;
+        this.tmView = tmView;
     }
 
     private TextEditorFrame() {
@@ -62,7 +62,7 @@ public class TextEditorFrame extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        karelView.joinEditor();
+        tmView.joinEditor();
     }//GEN-LAST:event_formWindowClosing
 
     /**

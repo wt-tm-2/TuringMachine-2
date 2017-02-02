@@ -30,6 +30,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import TM.controller.TMController;
 
 /**
  *
@@ -48,6 +49,8 @@ public class TMView extends javax.swing.JFrame {
     public static final Font MAC_FONT = new Font("Dialog", Font.BOLD, 14);
     private static final String defaultRobot = "robot 1 1 n 0"; //Default robot location
     
+    private final TMController controller;
+    
     private String workingDirectory = System.getProperty("user.dir");
     private File sourceFile;
     private File worldFile;
@@ -61,13 +64,16 @@ public class TMView extends javax.swing.JFrame {
      * Creates new form KarelView
      * @param controller
      */
-    public TMView() {
+    public TMView(final TMController controller) {
+        
+        this.controller = controller;
        
     
         WindowListener exitListener = new WindowAdapter() {
 
             @Override
             public void windowClosing(WindowEvent e) {
+                controller.disposeTMView();
                 TMView.this.joinEditor();
             }
         };
@@ -76,7 +82,8 @@ public class TMView extends javax.swing.JFrame {
 
         
         initComponents();
-        
+        startButton1.setEnabled(false);
+        stepButton1.setEnabled(false);
       
         
         this.setSize(new Dimension(1000, 750));
