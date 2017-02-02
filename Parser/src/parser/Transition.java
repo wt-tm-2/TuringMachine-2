@@ -14,13 +14,13 @@ public class Transition {
     private String readSymbol;
     private String writeSymbol;
     private String direction;
-    private State newState;
+    private String newStateMnemonic;
     
-    Transition(String readSymbol, String writeSymbol, String direction, State newState) {
+    Transition(String readSymbol, String writeSymbol, String direction, String newStateMnemonic) {
         this.readSymbol = readSymbol;
         this.writeSymbol = writeSymbol;
         this.direction = direction;
-        this.newState = newState;
+        this.newStateMnemonic = newStateMnemonic;
     }
 
     public String getReadSymbol() {
@@ -35,8 +35,8 @@ public class Transition {
         return direction;
     }
 
-    public State getNewState() {
-        return newState;
+    public String getNewState() {
+        return newStateMnemonic;
     }
     
     
