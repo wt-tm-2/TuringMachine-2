@@ -2,7 +2,6 @@
 package parser;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Defines the possible tokens in the TM simulator language. Provides regular
@@ -32,13 +31,13 @@ public class Token {
     public static final int COMMENT = 3;
     
     /* Map tokens to their regular expression pattern */
-    private static final Map<Integer, String> TOKEN_REGEX;
+    private static final HashMap<Integer, String> TOKEN_REGEX;
     static {
         TOKEN_REGEX = new HashMap<>();
         TOKEN_REGEX.put(STATE, "\\w*");                // Match alphanumeric and _
         TOKEN_REGEX.put(SYMBOL, "\\p{Print}{1}");     // Match any one printable ASCII character
         TOKEN_REGEX.put(DIRECTION, "(r|R|l|L|n|N)");   // Match either right, left, or no direction
-        TOKEN_REGEX.put(COMMENT, "\\s*#");           // Match white spaced followed by comment char
+        TOKEN_REGEX.put(COMMENT, "\\s*#.*");         // Match white spaced followed by comment char
     }
 
     /**
