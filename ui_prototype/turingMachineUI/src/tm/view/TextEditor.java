@@ -25,7 +25,7 @@ import javax.swing.Action;
 public class TextEditor extends JScrollPane implements Serializable {
     
     private JTextPane textPane;
-    private KarelDocument doc;
+    private TMDocument doc;
     private TextLineNumber tln;
     
     public static final Color ERROR_COLOR = new Color(255,50,50);
@@ -48,7 +48,7 @@ public class TextEditor extends JScrollPane implements Serializable {
         verticalBar = this.getVerticalScrollBar();
         
         textPane = new JTextPane();
-        doc = new KarelDocument();
+        doc = new TMDocument();
         textPane.setDocument(doc);
         
         this.setViewportView(textPane);
@@ -190,9 +190,9 @@ public class TextEditor extends JScrollPane implements Serializable {
     }
     
     /** Custom Document that changes all tabs to four spaces. */
-    private class KarelDocument extends DefaultStyledDocument {
+    private class TMDocument extends DefaultStyledDocument {
            
-        public KarelDocument() {
+        public TMDocument() {
             addDocumentListener(new TextEditorListener());
         } 
         

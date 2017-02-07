@@ -47,21 +47,18 @@ public class TMView extends javax.swing.JFrame {
     public static final Font WINDOWS_FONT = new Font("Courier New", Font.BOLD, 14);
     public static final Font LINUX_FONT = new Font("DejaVu Sans Mono", Font.BOLD, 14);
     public static final Font MAC_FONT = new Font("Dialog", Font.BOLD, 14);
-    private static final String defaultRobot = "robot 1 1 n 0"; //Default robot location
     
     private final TMController controller;
     
     private String workingDirectory = System.getProperty("user.dir");
     private File sourceFile;
-    private File worldFile;
-    private int selectedTabIndex = CODE_TAB_INDEX;
     
     private ButtonGroup zoomButtonGroup = new ButtonGroup();
     private JFontChooser fontChooser = new JFontChooser();
     private Font selectedFont = DEFAULT_FONT;
     
     /**
-     * Creates new form KarelView
+     * Creates new form TMView
      * @param controller
      */
     public TMView(final TMController controller) {
@@ -514,15 +511,15 @@ public class TMView extends javax.swing.JFrame {
     }//GEN-LAST:event_formatMenuMenuSelected
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
-        final String aboutMessage = "New Karel the Robot features added by team Karel-2\n\n" +
-                "The Karel-2 Team:\n\n" + "\tH. Paul Haiduk - Project Director\n" +
+        final String aboutMessage = "Turing Machine Simulator created by Team 2\n\n" +
+                "The Team:\n\n" + "\tH. Paul Haiduk - Project Director\n" +
                 "\tAnthony Thornton - Team Member\n" + "\tZachary Gutierrez - Team Member\n" + 
                 "\tMichael Johnson - Team Member\n";
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                     JOptionPane.showMessageDialog(TMView.this, aboutMessage, 
-                            "About Karel the Robot", JOptionPane.INFORMATION_MESSAGE);
+                            "About Turing Machine Project", JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }//GEN-LAST:event_aboutMenuItemActionPerformed
