@@ -1,0 +1,28 @@
+The following are syntax specifications that the parser expects from the input
+Turing Machine source file.
+
+Written by: Michael Johnson 02/07/17
+Updated:
+
+1. A line in the input file can be blank, a comment line, or contain
+   a Turing Machine state transition.
+
+2. The comment character is '#'. Any lines starting with this character or
+   whitespace followed by this character are ignored by the parser.
+
+3. A valid Turing Machine state transition is a 5-tuple in the form:
+
+    (<current state>, <read symbol> <write symbol>, <direction>, <new state>)
+
+4. The <current state> and <new state> can contain any alphanumeric 
+   character and _. There is no restriction on length at this time. The
+   mnemonics could be a single digit like '0' or a more descriptive name
+   like "carry_state".
+
+5. The read and write symbols can be any single printable ASCII character
+   except the comment character '#'.
+
+6. The direction token can be 'l' or 'L' for a left movement of the read/write
+   head, 'r' or 'R' for a right movement, or 'n' or 'N' for no movement.
+
+
