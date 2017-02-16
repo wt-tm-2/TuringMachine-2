@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="917.0" prefWidth="1210.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="917.0" prefWidth="1210.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="turingmachinefx.FXMLDocumentController">
    <children>
       <TextField id="tape" alignment="CENTER" editable="false" layoutX="26.0" layoutY="59.0" prefHeight="105.0" prefWidth="1158.0" text="1001001">
          <font>
@@ -22,8 +22,8 @@
       <Label layoutX="590.0" layoutY="246.0" text="New Symbol" />
       <Label layoutX="770.0" layoutY="246.0" text="Direction" />
       <Label layoutX="937.0" layoutY="246.0" text="New State" />
-      <TextField id="currentState" editable="false" layoutX="240.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
-      <TextField id="currentSymbol" editable="false" layoutX="410.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
+      <TextField fx:id="currentState" editable="false" layoutX="240.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
+      <TextField id="currentSymbol" fx:id="currrentSymbol" editable="false" layoutX="410.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
       <TextField id="newSymbol" editable="false" layoutX="580.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
       <TextField id="direction" editable="false" layoutX="750.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
       <TextField id="newState" editable="false" layoutX="920.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
@@ -32,7 +32,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Button id="startButton" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Start" />
-                  <Button id="stepButton" layoutX="14.0" layoutY="60.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Step" />
+                  <Button fx:id="stepButton" layoutX="14.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="120.0" text="Step" />
                   <Button id="stopButton" layoutX="14.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Stop" />
                   <Button id="resetButton" layoutX="14.0" layoutY="140.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Reset" />
                   <Button id="loadButton" layoutX="14.0" layoutY="180.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Load" />
