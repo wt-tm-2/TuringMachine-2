@@ -64,7 +64,7 @@ public class FXMLDocumentController implements Initializable {
     private Button loadButton1;
     @FXML
     private Label instructionCount;
-    private TMController controller;
+    private TMController controller = new TMController();
     
     FileChooser fileChooser = new FileChooser();
     
@@ -79,8 +79,7 @@ public class FXMLDocumentController implements Initializable {
         Node node = (Node) event.getSource();
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
         startSourceView(file);
-        
-        /*try {
+        try {
             controller.loadData(input.getText(),initialState.getText());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,7 +92,7 @@ public class FXMLDocumentController implements Initializable {
         input.setEditable(false);
         loadButton1.setDisable(true);
         setNextState();
-        */
+        
     }
     @FXML
     private void handleResetButtonAction(ActionEvent event) {
@@ -141,6 +140,7 @@ public class FXMLDocumentController implements Initializable {
  * Gets data from controller and populates the boxes on the GUI that explain the
  * next step on the turing machine
  */
+    @FXML
     public void setNextState(){
         String[] values = controller.getData();
         currentState.setText(values[0]);
@@ -154,6 +154,7 @@ public class FXMLDocumentController implements Initializable {
  * Gets the value of the tape stored in the controller method and stores it in the
  * tape field in the GUI.
  */
+    @FXML
     public void setTape(){
         Vector<Character> tapeVector = controller.getTape();
         String newTape = new String();
