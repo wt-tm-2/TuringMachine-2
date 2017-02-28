@@ -76,9 +76,9 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void handleLoadButtonAction(ActionEvent event) {
-        Node node = (Node) event.getSource();
-        File file = fileChooser.showOpenDialog(node.getScene().getWindow());
-        startSourceView(file);
+        //Node node = (Node) event.getSource();
+        //File file = fileChooser.showOpenDialog(node.getScene().getWindow());
+        //startSourceView(file);
         try {
             controller.loadData(input.getText(),initialState.getText());
         } catch (FileNotFoundException ex) {
@@ -107,10 +107,13 @@ public class FXMLDocumentController implements Initializable {
 }
     @FXML
     private void handleStepButtonAction(ActionEvent event){
-        controller.step();
+        int x = controller.step();
         setTape();
         setNextState();
         instructionCount.setText(String.valueOf(controller.getIC()));
+        if (x == 1){
+            halt();
+        }
     }
     
     private void startSourceView(File sourceFile) {
@@ -163,6 +166,12 @@ public class FXMLDocumentController implements Initializable {
         }
         tape.setText(newTape);
     }
+    
+    public void halt(){
+        startButton1.setDisable(true);
+        stepButton1.setDisable(true);
+        stopButton1.setDisable(true);
+   }
     
     
     @Override
