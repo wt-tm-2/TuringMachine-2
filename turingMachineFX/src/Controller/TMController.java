@@ -97,6 +97,10 @@ public class TMController {
         if (tape.size() == index){
             tape.add("_".charAt(0));
         }
+        if (index==-1){
+            tape.add(0,"_".charAt(0));
+            index = 0;
+        }
         for (int i = 0; i < trans.size(); i++){
             if(trans.get(i).getReadSymbol().equals(tape.get(index).toString())){
                 nextTransition = trans.get(i);

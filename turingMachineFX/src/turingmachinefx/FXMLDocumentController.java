@@ -27,6 +27,9 @@ import Controller.TMController;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -34,6 +37,8 @@ import java.util.logging.Logger;
  */
 public class FXMLDocumentController implements Initializable {
     
+    @FXML
+    private Canvas sdCanvas;
     @FXML
     private Button stepButton;
     @FXML
@@ -176,7 +181,13 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        GraphicsContext gc = sdCanvas.getGraphicsContext2D();
+        drawStateDiagram(gc);
         
     }    
+
+    private void drawStateDiagram(GraphicsContext gc) {
+        gc.strokeOval(50, 50, 100, 100);
+    }
     
 }
