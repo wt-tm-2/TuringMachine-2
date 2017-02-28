@@ -46,7 +46,7 @@ public class TMController {
      */
     
     public void loadData(String tape2,String IS) throws FileNotFoundException{
-        stateList = Parser.parseSourceFile("testProgs-Data/test1.txt");
+        stateList = Parser.parseSourceFile("testProgs-Data/test1_1.txt");
         for (int i = 0, n = tape2.length(); i < n; i++) {
             tape.add(tape2.charAt(i));
         }
@@ -59,12 +59,6 @@ public class TMController {
             }
         }
         currentState = IS;
-        //System.out.println(nextTransition.getReadSymbol());
-        //System.out.println(nextTransition.getWriteSymbol());
-        //System.out.println(nextTransition.getDirection());
-        //System.out.println(nextTransition.getNewState());
-
-        
             
 
     }
@@ -85,7 +79,7 @@ public class TMController {
      * step to be executed.
      */
     
-    public void step(){
+    public int step(){
         tape.set(index, nextTransition.getWriteSymbol().charAt(0));
         if (nextTransition.getDirection().equals("l") || nextTransition.getDirection().equals("L")){
             index--;
@@ -93,16 +87,24 @@ public class TMController {
         if (nextTransition.getDirection().equals("r") || nextTransition.getDirection().equals("R")){
             index++;
         }
+        if (nextTransition.getNewState().equals("halt")){
+            return 1;
+        }
+        else{
         currentState = nextTransition.getNewState();
         State state = stateList.get(currentState);
         trans = state.getStateTransitions();
+        if (tape.size() == index){
+            tape.add("_".charAt(0));
+        }
         for (int i = 0; i < trans.size(); i++){
             if(trans.get(i).getReadSymbol().equals(tape.get(index).toString())){
                 nextTransition = trans.get(i);
             }
         }
         instructionCounter++;
-        
+        return 0;
+        }
     }
     
     public String[] getData(){
