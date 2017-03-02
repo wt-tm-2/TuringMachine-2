@@ -45,8 +45,8 @@ public class TMController {
      * @throws FileNotFoundException 
      */
     
-    public void loadData(String tape2,String IS) throws FileNotFoundException{
-        stateList = Parser.parseSourceFile("testProgs-Data/test1_1.txt");
+    public void loadData(String tape2,String IS, String path) throws FileNotFoundException{
+        stateList = Parser.parseSourceFile(path);
         for (int i = 0, n = tape2.length(); i < n; i++) {
             tape.add(tape2.charAt(i));
         }
@@ -88,6 +88,7 @@ public class TMController {
             index++;
         }
         if (nextTransition.getNewState().equals("halt")){
+            instructionCounter++;
             return 1;
         }
         else{
