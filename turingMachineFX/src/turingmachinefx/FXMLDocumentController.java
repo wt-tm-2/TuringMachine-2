@@ -25,11 +25,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import Controller.TMController;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.paint.Color;
+import javafx.concurrent.*;
+import javafx.application.Platform;
 
 /**
  *
@@ -69,6 +73,8 @@ public class FXMLDocumentController implements Initializable {
     private Button loadButton1;
     @FXML
     private Label instructionCount;
+    @FXML
+    private ChoiceBox speed;
     private TMController controller = new TMController();
     
     FileChooser fileChooser = new FileChooser();
@@ -81,16 +87,15 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void handleLoadButtonAction(ActionEvent event) {
-        //Node node = (Node) event.getSource();
-        //File file = fileChooser.showOpenDialog(node.getScene().getWindow());
-        //startSourceView(file);
+        Node node = (Node) event.getSource();
+        File file = fileChooser.showOpenDialog(node.getScene().getWindow());
+        startSourceView(file);
         try {
-            controller.loadData(input.getText(),initialState.getText());
+            controller.loadData(input.getText(),initialState.getText(),file.getPath());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         tape.setText(input.getText());
-        startButton1.setDisable(false);
         startButton1.setDisable(false);
         stepButton1.setDisable(false);
         stopButton1.setDisable(false);
@@ -119,6 +124,46 @@ public class FXMLDocumentController implements Initializable {
         if (x == 1){
             halt();
         }
+    }
+    
+    @FXML
+    private void handleStartButtonAction(ActionEvent event) throws InterruptedException{
+        int delay = 0;
+        int st = 0;
+        String s = (String) speed.getValue();
+        switch (s){
+            case "Instant": delay = 0;
+                break;
+            case "100%": delay = 500;
+                break;
+            case "50%": delay = 1000;
+                break;
+            case "25%": delay = 2000;
+        }
+        final int delay2 = delay;
+            new Thread(){
+                public void run(){
+                            int st = 0;
+                            while (st != 1){
+                            st = controller.step();
+                
+                            Platform.runLater(new Runnable() {
+
+                            public void run() {
+                                    setTape();
+                                    setNextState();
+                                    instructionCount.setText(String.valueOf(controller.getIC()));
+                            }
+                            });
+                                try {
+                                    TimeUnit.MILLISECONDS.sleep(delay2);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                        }
+            }  
+            }.start();
+        halt();
     }
     
     private void startSourceView(File sourceFile) {
@@ -183,7 +228,6 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         GraphicsContext gc = sdCanvas.getGraphicsContext2D();
         drawStateDiagram(gc);
-        
     }    
 
     private void drawStateDiagram(GraphicsContext gc) {
