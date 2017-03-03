@@ -38,6 +38,7 @@ import javafx.concurrent.*;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
+import StateDiagram.StateDiagramController;
 
 /**
  *
@@ -80,6 +81,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ChoiceBox speed;
     private TMController controller = new TMController();
+    private GraphicsContext gc;
     
     FileChooser fileChooser = new FileChooser();
     
@@ -232,12 +234,8 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        GraphicsContext gc = sdCanvas.getGraphicsContext2D();
-        drawStateDiagram(gc);
+        
     }    
 
-    private void drawStateDiagram(GraphicsContext gc) {
-        gc.strokeOval(50, 50, 100, 100);
-    }
     
 }

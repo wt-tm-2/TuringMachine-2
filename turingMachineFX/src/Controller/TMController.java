@@ -130,4 +130,8 @@ public class TMController {
         return instructionCounter;
     }
     
+    public static int getSize(){
+        return stateList.size();
+    }
+    
 }
