@@ -24,6 +24,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import Controller.TMController;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -34,6 +36,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.paint.Color;
 import javafx.concurrent.*;
 import javafx.application.Platform;
+import javafx.scene.control.TextArea;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -172,20 +176,22 @@ public class FXMLDocumentController implements Initializable {
             Scene sourceViewScene = new Scene(sourceViewRoot);
             Stage sourceViewStage = new Stage();
             sourceViewStage.setScene(sourceViewScene);
-            writeSourceLines(sourceFile, (Label) sourceViewScene.lookup("#sourceCodeView"));
+            writeSourceLines(sourceFile, (TextArea) sourceViewScene.lookup("#sourceCodeView"));
             sourceViewStage.show();
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
     
-    private void writeSourceLines(File sourceFile, Label sourceView) throws FileNotFoundException {
+    private void writeSourceLines(File sourceFile, TextArea sourceView) throws FileNotFoundException {
         Scanner scanner = new Scanner(sourceFile);
         StringBuilder sb = new StringBuilder();
         while (scanner.hasNextLine()) {
             sb.append(scanner.nextLine());
             sb.append('\n');
         }
+        sourceView.setEditable(false);
+        sourceView.setFont(new Font("FreeMono", 16));
         sourceView.setText(sb.toString());
     }
     
