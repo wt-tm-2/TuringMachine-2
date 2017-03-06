@@ -6,6 +6,9 @@
 package StateDiagram;
 
 import Controller.TMController;
+import java.util.HashMap;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import parser.State;
 
@@ -14,10 +17,13 @@ import parser.State;
  * @author WTSTUDENTS\zg977947
  */
 public class StateDiagramController {
-    private static int numStates = TMController.getSize();
-    private static Circle [] stateNodes = new Circle[numStates];
+    private static HashMap<String, State> stateList;
     
-    static double positions [][] = {
+    public StateDiagramController(HashMap<String, State> sl){
+        stateList = sl;
+    }
+    
+    private static double positions [][] = {
         {50, 50 },
         {150, 50},
         {250, 50},
@@ -28,11 +34,17 @@ public class StateDiagramController {
         {150, 250},
         {250, 250}
     };
-    public static void drawStateDiagram(){
+    public static void drawStateDiagram(StackPane sdPane){
+        int numStates = TMController.getSize();
+        Circle [] stateNodes = new Circle[numStates];
+        
         for(int i=0; i<numStates; i++){
-            stateNodes[i].setCenterX(positions[i][0]);
-            stateNodes[i].setCenterY(positions[i][1]);
-            stateNodes[i].setRadius(100);
+            stateNodes[i] = new Circle(25, Color.RED);
+            stateNodes[i].relocate(positions[i][0], positions[i][1]);
+            //stateNodes[i].setCenterX(positions[i][0]);
+            //stateNodes[i].setCenterY(positions[i][1]);
+            stateNodes[i].setRadius(25); // may not be needed
+            sdPane.getChildren().add(stateNodes[i]);
         }
     }
 }

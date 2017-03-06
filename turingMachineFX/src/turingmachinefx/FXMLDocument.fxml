@@ -78,10 +78,10 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <Canvas fx:id="sdCanvas" height="581.0" layoutX="2.0" layoutY="316.0" width="884.0" />
             <Label layoutX="26.0" layoutY="290.0" text="State Diagram:" />
             <Label layoutX="1025.0" layoutY="273.0" text="Instruction Count:" />
             <Label fx:id="instructionCount" layoutX="1148.0" layoutY="273.0" text="0" />
+            <StackPane fx:id="sdPane" layoutX="14.0" layoutY="315.0" prefHeight="581.0" prefWidth="865.0" />
          </children>
       </AnchorPane>
    </children>

@@ -3,6 +3,7 @@ package parser;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import javafx.scene.shape.Circle;
 
 /**
  * Defines a state in which the Turing Machine simulator can be in.
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class State {
     private final String stateMnemonic;
     private ArrayList<Transition> stateTransitions;
+    private Circle stateGraphic;
     
     /**
      * Construct a new Turing Machine state with an empty transition list.
@@ -23,6 +25,8 @@ public class State {
     State(String stateMnemonic) {
         this.stateMnemonic = stateMnemonic;
         stateTransitions = new ArrayList<>();
+        stateGraphic = new Circle();
+        stateGraphic.setId(stateMnemonic);
     }
     
     /**
@@ -48,6 +52,16 @@ public class State {
      */
     public String getStateMnemonic() {
         return stateMnemonic;
+    }
+    
+    public void setGraphicAttributes(double centerX, double centerY, double radius){
+        stateGraphic.setCenterX(centerX);
+        stateGraphic.setCenterY(centerY);
+        stateGraphic.setRadius(radius);
+    }
+    
+    public Circle getStateGraphic(){
+        return stateGraphic;
     }
 
     /* Override methods implemented by NetBeans */

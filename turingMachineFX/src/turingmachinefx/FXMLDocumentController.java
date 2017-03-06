@@ -30,15 +30,13 @@ import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.paint.Color;
 import javafx.concurrent.*;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
 import StateDiagram.StateDiagramController;
+import javafx.scene.layout.StackPane;
 
 /**
  *
@@ -47,7 +45,7 @@ import StateDiagram.StateDiagramController;
 public class FXMLDocumentController implements Initializable {
     
     @FXML
-    private Canvas sdCanvas;
+    private StackPane sdPane;
     @FXML
     private Button stepButton;
     @FXML
@@ -81,7 +79,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ChoiceBox speed;
     private TMController controller = new TMController();
-    private GraphicsContext gc;
     
     FileChooser fileChooser = new FileChooser();
     
@@ -108,6 +105,7 @@ public class FXMLDocumentController implements Initializable {
         input.setEditable(false);
         loadButton1.setDisable(true);
         setNextState();
+        StateDiagramController.drawStateDiagram(sdPane);
         
     }
     @FXML
