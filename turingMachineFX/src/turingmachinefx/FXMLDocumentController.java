@@ -36,6 +36,7 @@ import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
 import StateDiagram.StateDiagramController;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -45,7 +46,7 @@ import javafx.scene.layout.StackPane;
 public class FXMLDocumentController implements Initializable {
     
     @FXML
-    private StackPane sdPane;
+    private Pane sdPane;
     @FXML
     private Button stepButton;
     @FXML

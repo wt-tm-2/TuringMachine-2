@@ -7,6 +7,11 @@ package StateDiagram;
 
 import Controller.TMController;
 import java.util.HashMap;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -34,17 +39,28 @@ public class StateDiagramController {
         {150, 250},
         {250, 250}
     };
-    public static void drawStateDiagram(StackPane sdPane){
+    public static void drawStateDiagram(Pane sdPane){
+        Group group = new Group();
+        Label label = new Label("Circle");
+        StackPane sPane = new StackPane();
+        
         int numStates = TMController.getSize();
         Circle [] stateNodes = new Circle[numStates];
         
         for(int i=0; i<numStates; i++){
             stateNodes[i] = new Circle(25, Color.RED);
-            stateNodes[i].relocate(positions[i][0], positions[i][1]);
+            //stateNodes[i].relocate(positions[i][0], positions[i][1]);
+            sPane.setLayoutX(positions[i][0]);
+            sPane.setLayoutY(positions[i][1]);
             //stateNodes[i].setCenterX(positions[i][0]);
             //stateNodes[i].setCenterY(positions[i][1]);
             stateNodes[i].setRadius(25); // may not be needed
-            sdPane.getChildren().add(stateNodes[i]);
+            
+            //group.getChildren().addAll(stateNodes[i], sPane);
+            sPane.getChildren().addAll(stateNodes[i],label);
+            sPane.setAlignment(label, Pos.CENTER);
+            
+            sdPane.getChildren().add(sPane);
         }
     }
 }
