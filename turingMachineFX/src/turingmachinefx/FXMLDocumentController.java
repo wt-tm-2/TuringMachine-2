@@ -80,6 +80,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ChoiceBox speed;
     private TMController controller = new TMController();
+    private File currentfile;
+    private boolean killThread = false;
     
     FileChooser fileChooser = new FileChooser();
     
@@ -91,14 +93,12 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void handleLoadButtonAction(ActionEvent event) {
+        controller.resetData();
         Node node = (Node) event.getSource();
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
+        currentfile = file;
         startSourceView(file);
-        try {
-            controller.loadData(input.getText(),initialState.getText(),file.getPath());
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        loadFile();
         tape.setText(input.getText());
         startButton1.setDisable(false);
         stepButton1.setDisable(false);
@@ -108,14 +108,24 @@ public class FXMLDocumentController implements Initializable {
         setNextState();
         
     }
+    
+    @FXML
+    private void loadFile(){
+        try {
+            controller.loadData(input.getText(),initialState.getText(),currentfile.getPath());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     @FXML
     private void handleResetButtonAction(ActionEvent event) {
         controller.resetData();
+        loadFile();
         input.setEditable(true);
         tape.setText(input.getText());
-        startButton1.setDisable(true);
-        stepButton1.setDisable(true);
-        stopButton1.setDisable(true);
+        startButton1.setDisable(false);
+        stepButton1.setDisable(false);
+        stopButton1.setDisable(false);
         instructionCount.setText("0");
         loadButton1.setDisable(false);
 }
@@ -129,9 +139,23 @@ public class FXMLDocumentController implements Initializable {
             halt();
         }
     }
-    
+    /**
+     * This method runs the program by creating a thread which continually
+     * calls the step method in the controller. It gets the speed form the drop
+     * down box on the UI and then creates a delay (in milliseconds). The run
+     * is halted when the stop button is clicked which changes a global variable
+     * that kicks the thread out of the loop.
+     * @param event
+     * @throws InterruptedException 
+     */
     @FXML
     private void handleStartButtonAction(ActionEvent event) throws InterruptedException{
+        killThread = false;
+        stepButton1.setDisable(true);
+        resetButton1.setDisable(true);
+        loadButton1.setDisable(true);
+        startButton1.setDisable(true);
+
         int delay = 0;
         int st = 0;
         String s = (String) speed.getValue();
@@ -148,7 +172,7 @@ public class FXMLDocumentController implements Initializable {
             new Thread(){
                 public void run(){
                             int st = 0;
-                            while (st != 1){
+                            while (st != 1 && !killThread){
                             st = controller.step();
                 
                             Platform.runLater(new Runnable() {
@@ -165,9 +189,19 @@ public class FXMLDocumentController implements Initializable {
                                     Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                         }
+                            if (!killThread){    
+                            halt();
+                            }
+                        stepButton1.setDisable(false);
+                        resetButton1.setDisable(false);
+                        loadButton1.setDisable(false);
+                        startButton1.setDisable(false);
             }  
             }.start();
-        halt();
+    }
+    @FXML
+    private void handleStopButtonAction(ActionEvent event){
+        killThread = true;
     }
     
     private void startSourceView(File sourceFile) {
