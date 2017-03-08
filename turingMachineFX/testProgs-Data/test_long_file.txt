@@ -1,0 +1,88 @@
+
+
+state1 0 1 r state1
+state1 1 0 r state1
+state1 _ 1 n halt
+
+
+# Another comment that should be ignored by parser
+
+
+
+state1 0 1 r state1
+state1 1 0 r state1
+state1 _ 1 n halt
+
+
+# Another comment that should be ignored by parser
+
+
+
+state1 0 1 r state1
+state1 1 0 r state1
+state1 _ 1 n halt
+
+
+# Another comment that should be ignored by parser
+
+
+
+
+state1 0 1 r state1
+state1 1 0 r state1
+state1 _ 1 n halt
+
+
+# Another comment that should be ignored by parser
+
+
+
+
+state1 0 1 r state1
+state1 1 0 r state1
+state1 _ 1 n halt
+
+
+# Another comment that should be ignored by parser
+
+
+
+
+
+
+
+
+
+
+state1 0 1 r state1
+state1 1 0 r state1
+state1 _ 1 n halt
+
+
+# Another comment that should be ignored by parser
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+state1 0 1 r state1
+state1 1 0 r state1
+state1 _ 1 n halt
+
+
+# Another comment that should be ignored by parser

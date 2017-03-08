@@ -82,7 +82,12 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ChoiceBox speed;
     @FXML
+    private Scene sourceViewScene;
+    @FXML
+    private Stage sourceViewStage;
+    @FXML
     private WebView sourceCodeView;
+    private boolean sourceViewWindowOpen = false;
     private TMController controller = new TMController();
     private File currentFile;
     private boolean killThread = false;
@@ -209,17 +214,21 @@ public class FXMLDocumentController implements Initializable {
     
     private void startSourceView() {
         try {
-            if (sourceCodeView != null) {
-                writeSourceLines();
-            } else {
+            if (!sourceViewWindowOpen) {
                 Parent sourceViewRoot = FXMLLoader.load(getClass().getResource("SourceView.fxml"));
-                Scene sourceViewScene = new Scene(sourceViewRoot);
-                Stage sourceViewStage = new Stage();
+                sourceViewScene = new Scene(sourceViewRoot);
+                sourceViewStage = new Stage();
+                sourceViewStage.setOnHiding((event) -> {
+                    sourceViewWindowOpen = false;
+                });
                 sourceViewStage.setScene(sourceViewScene);
-                sourceCodeView = (WebView) sourceViewScene.lookup("#sourceCodeView");
-                writeSourceLines();
+                sourceCodeView = (WebView) sourceViewScene.lookup("#sourceCodeView");                
                 sourceViewStage.show();
+                sourceViewWindowOpen = true;
             }
+                writeSourceLines();
+                sourceViewStage.setTitle(currentFile.getName());
+
         } catch(IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
