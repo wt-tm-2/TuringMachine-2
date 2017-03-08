@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import Controller.TMController;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -38,6 +39,7 @@ import javafx.concurrent.*;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
+import javafx.scene.web.WebView;
 
 /**
  *
@@ -79,8 +81,10 @@ public class FXMLDocumentController implements Initializable {
     private Label instructionCount;
     @FXML
     private ChoiceBox speed;
+    @FXML
+    private WebView sourceCodeView;
     private TMController controller = new TMController();
-    private File currentfile;
+    private File currentFile;
     private boolean killThread = false;
     
     FileChooser fileChooser = new FileChooser();
@@ -95,9 +99,8 @@ public class FXMLDocumentController implements Initializable {
     private void handleLoadButtonAction(ActionEvent event) {
         controller.resetData();
         Node node = (Node) event.getSource();
-        File file = fileChooser.showOpenDialog(node.getScene().getWindow());
-        currentfile = file;
-        startSourceView(file);
+        currentFile = fileChooser.showOpenDialog(node.getScene().getWindow());
+        startSourceView();
         loadFile();
         tape.setText(input.getText());
         startButton1.setDisable(false);
@@ -112,7 +115,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void loadFile(){
         try {
-            controller.loadData(input.getText(),initialState.getText(),currentfile.getPath());
+            controller.loadData(input.getText(),initialState.getText(),currentFile.getPath());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -204,29 +207,41 @@ public class FXMLDocumentController implements Initializable {
         killThread = true;
     }
     
-    private void startSourceView(File sourceFile) {
+    private void startSourceView() {
         try {
-            Parent sourceViewRoot = FXMLLoader.load(getClass().getResource("SourceView.fxml"));
-            Scene sourceViewScene = new Scene(sourceViewRoot);
-            Stage sourceViewStage = new Stage();
-            sourceViewStage.setScene(sourceViewScene);
-            writeSourceLines(sourceFile, (TextArea) sourceViewScene.lookup("#sourceCodeView"));
-            sourceViewStage.show();
-        } catch(IOException e) {
-            e.printStackTrace();
+            if (sourceCodeView != null) {
+                writeSourceLines();
+            } else {
+                Parent sourceViewRoot = FXMLLoader.load(getClass().getResource("SourceView.fxml"));
+                Scene sourceViewScene = new Scene(sourceViewRoot);
+                Stage sourceViewStage = new Stage();
+                sourceViewStage.setScene(sourceViewScene);
+                sourceCodeView = (WebView) sourceViewScene.lookup("#sourceCodeView");
+                writeSourceLines();
+                sourceViewStage.show();
+            }
+        } catch(IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private void writeSourceLines(File sourceFile, TextArea sourceView) throws FileNotFoundException {
-        Scanner scanner = new Scanner(sourceFile);
+    private void writeSourceLines() throws FileNotFoundException {
+        Scanner scanner = new Scanner(currentFile);
         StringBuilder sb = new StringBuilder();
         while (scanner.hasNextLine()) {
+            sb.append("<span>");
             sb.append(scanner.nextLine());
-            sb.append('\n');
+            sb.append("</span>");
         }
-        sourceView.setEditable(false);
-        sourceView.setFont(new Font("FreeMono", 16));
-        sourceView.setText(sb.toString());
+        InputStream inputStream =  getClass().getClassLoader().getResourceAsStream(
+                "resources/sourceCodeView.html");
+        String sourceCodeHtml;
+        try(Scanner s = new Scanner(inputStream)) { 
+            sourceCodeHtml = s.useDelimiter("\\A").next();
+        }
+
+        sourceCodeHtml = sourceCodeHtml.replaceFirst("<!-- user src -->", sb.toString());
+        sourceCodeView.getEngine().loadContent(sourceCodeHtml);
     }
     
     /**
