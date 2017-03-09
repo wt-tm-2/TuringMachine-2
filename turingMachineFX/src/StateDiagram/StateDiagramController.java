@@ -49,18 +49,18 @@ public class StateDiagramController {
         
         for(int i=0; i<numStates; i++){
             stateNodes[i] = new Circle(25, Color.RED);
-            //stateNodes[i].relocate(positions[i][0], positions[i][1]);
-            sPane.setLayoutX(positions[i][0]);
-            sPane.setLayoutY(positions[i][1]);
+            stateNodes[i].relocate(positions[i][0], positions[i][1]);
+            //sPane.setLayoutX(positions[i][0]);
+            //sPane.setLayoutY(positions[i][1]);
             //stateNodes[i].setCenterX(positions[i][0]);
             //stateNodes[i].setCenterY(positions[i][1]);
             stateNodes[i].setRadius(25); // may not be needed
             
             //group.getChildren().addAll(stateNodes[i], sPane);
-            sPane.getChildren().addAll(stateNodes[i],label);
-            sPane.setAlignment(label, Pos.CENTER);
+            //sPane.getChildren().addAll(stateNodes[i],label);
+            //sPane.setAlignment(label, Pos.CENTER);
             
-            sdPane.getChildren().add(sPane);
+            sdPane.getChildren().add(stateNodes[i]);
         }
     }
 }

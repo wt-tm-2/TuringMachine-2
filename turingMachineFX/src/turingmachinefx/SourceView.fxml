@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.WebView?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="786.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="847.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextArea fx:id="sourceCodeView" layoutX="14.0" layoutY="14.0" prefHeight="755.0" prefWidth="533.0" />
+      <WebView fx:id="sourceCodeView" prefHeight="591.0" prefWidth="603.0" />
+      <TextArea fx:id="syntaxErrorView" layoutX="15.0" layoutY="613.0" prefHeight="219.0" prefWidth="578.0" text="Syntax errors will be displayed here..." />
    </children>
-</Pane>
+</AnchorPane>

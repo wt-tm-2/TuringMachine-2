@@ -67,12 +67,15 @@ public class TMController {
      * Clears all global variables for this class to start fresh on the next load.
      */
     public void resetData(){
+        if(stateList.isEmpty() == false){
         stateList.clear();
         tape.clear();
         trans.clear();
         index = 0;
         instructionCounter = 0;
+        }
     }
+    
     
     /**
      * Executes the current line in the turing machine and then finds the next
