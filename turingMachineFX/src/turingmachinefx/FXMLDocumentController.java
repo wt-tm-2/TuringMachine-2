@@ -91,7 +91,7 @@ public class FXMLDocumentController implements Initializable {
     private TMController controller = new TMController();
     private File currentFile;
     private boolean killThread = false;
-    
+    private StateDiagramController sdController; 
     FileChooser fileChooser = new FileChooser();
     
     @FXML
@@ -114,7 +114,7 @@ public class FXMLDocumentController implements Initializable {
         input.setEditable(false);
         loadButton1.setDisable(true);
         setNextState();
-        StateDiagramController.drawStateDiagram(sdPane);
+        sdController.drawStateDiagram(sdPane);
         
     }
     
@@ -122,6 +122,7 @@ public class FXMLDocumentController implements Initializable {
     private void loadFile(){
         try {
             controller.loadData(input.getText(),initialState.getText(),currentFile.getPath());
+            sdController = new StateDiagramController(controller.getStateList());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }

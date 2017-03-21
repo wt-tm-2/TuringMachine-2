@@ -45,22 +45,23 @@ public class StateDiagramController {
         StackPane sPane = new StackPane();
         
         int numStates = TMController.getSize();
-        Circle [] stateNodes = new Circle[numStates];
+        Circle stateNodes = new Circle();
+        int i=0;
         
-        for(int i=0; i<numStates; i++){
-            stateNodes[i] = new Circle(25, Color.RED);
-            stateNodes[i].relocate(positions[i][0], positions[i][1]);
-            //sPane.setLayoutX(positions[i][0]);
-            //sPane.setLayoutY(positions[i][1]);
-            //stateNodes[i].setCenterX(positions[i][0]);
-            //stateNodes[i].setCenterY(positions[i][1]);
-            stateNodes[i].setRadius(25); // may not be needed
+        for(State state  : stateList.values()){
+            state.setGraphicAttributes(positions[i][0], positions[i][1], 25);
+            state.getStateGraphic().setFill(Color.BLUE);
+           //state.getStateGraphic().
+            //stateNodes[i] = new Circle(25, Color.RED);
+            //stateNodes[i].relocate(positions[i][0], positions[i][1]);
+            //stateNodes[i].setRadius(25); // may not be needed
             
             //group.getChildren().addAll(stateNodes[i], sPane);
             //sPane.getChildren().addAll(stateNodes[i],label);
             //sPane.setAlignment(label, Pos.CENTER);
             
-            sdPane.getChildren().add(stateNodes[i]);
+            sdPane.getChildren().add(state.getStateGraphic());
+            i++;
         }
     }
 }

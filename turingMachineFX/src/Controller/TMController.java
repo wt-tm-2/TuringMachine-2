@@ -137,4 +137,8 @@ public class TMController {
         return stateList.size();
     }
     
+    public static HashMap<String, State> getStateList(){
+        return stateList;
+    }
+    
 }
