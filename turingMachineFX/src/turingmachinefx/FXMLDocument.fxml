@@ -11,78 +11,83 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.FXCollections?>
 
-<Group xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="turingmachinefx.FXMLDocumentController">
-   <children>
-      <AnchorPane id="AnchorPane" prefHeight="917.0" prefWidth="1210.0">
+
+<ScrollPane prefHeight="917.0" prefWidth="1210.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="turingmachinefx.FXMLDocumentController">
+   <content>
+      <Group>
          <children>
-            <TextField id="tape" fx:id="tape" alignment="CENTER" editable="false" layoutX="26.0" layoutY="59.0" prefHeight="105.0" prefWidth="1158.0" text="1001001">
-               <font>
-                  <Font size="50.0" />
-               </font>
-            </TextField>
-            <Label layoutX="77.0" layoutY="215.0" text="Next Instruction:" />
-            <Label layoutX="246.0" layoutY="246.0" text="Current State" />
-            <Label layoutX="409.0" layoutY="246.0" text="Current Symbol" />
-            <Label layoutX="590.0" layoutY="246.0" text="New Symbol" />
-            <Label layoutX="770.0" layoutY="246.0" text="Direction" />
-            <Label layoutX="937.0" layoutY="246.0" text="New State" />
-            <TextField fx:id="currentState" editable="false" layoutX="240.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
-            <TextField id="currentSymbol" fx:id="currentSymbol" editable="false" layoutX="410.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
-            <TextField id="newSymbol" fx:id="newSymbol" editable="false" layoutX="580.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
-            <TextField id="direction" fx:id="direction" editable="false" layoutX="750.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
-            <TextField id="newState" fx:id="newState" editable="false" layoutX="920.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
-            <TitledPane alignment="CENTER" animated="false" collapsible="false" layoutX="902.0" layoutY="316.0" prefHeight="581.0" prefWidth="282.0" text="Control Panel">
-               <content>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <Button id="startButton" fx:id="startButton1" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleStartButtonAction" prefHeight="25.0" prefWidth="120.0" text="Start" />
-                        <Button fx:id="stepButton1" layoutX="14.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleStepButtonAction" prefHeight="25.0" prefWidth="120.0" text="Step" />
-                        <Button id="stopButton" fx:id="stopButton1" layoutX="14.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleStopButtonAction" prefHeight="25.0" prefWidth="120.0" text="Stop" />
-                        <Button id="resetButton" fx:id="resetButton1" layoutX="14.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleResetButtonAction" prefHeight="25.0" prefWidth="120.0" text="Reset" />
-                        <Button id="loadButton" fx:id="loadButton1" layoutX="14.0" layoutY="180.0" mnemonicParsing="false" onAction="#handleLoadButtonAction" prefHeight="25.0" prefWidth="120.0" text="Load" />
-                        <Label layoutX="14.0" layoutY="235.0" text="Speed:" />
-                        <ChoiceBox id="speed" fx:id="speed" layoutX="14.0" layoutY="265.0" prefWidth="150.0" value="100%">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                <String fx:value="100%" />
-                                <String fx:value="50%" />
-                                <String fx:value="25%" />
-                                <String fx:value="Instant" />
-                                </FXCollections>
-                            </items>
-                        </ChoiceBox>
-                        <Label layoutX="14.0" layoutY="322.0" text="Input:" />
-                        <TextField id="input" fx:id="input" layoutX="14.0" layoutY="354.0" text="1001001" />
-                        <Label id="initialState" layoutX="15.0" layoutY="402.0" text="Initial State:" />
-                        <TextField fx:id="initialState" layoutX="14.0" layoutY="429.0" />
-                     </children>
-                  </Pane>
-               </content>
-            </TitledPane>
-            <MenuBar layoutX="2.0" prefHeight="29.0" prefWidth="1210.0">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-            <Canvas fx:id="sdCanvas" height="581.0" layoutX="2.0" layoutY="316.0" width="884.0" />
-            <Label layoutX="26.0" layoutY="290.0" text="State Diagram:" />
-            <Label layoutX="1025.0" layoutY="273.0" text="Instruction Count:" />
-            <Label fx:id="instructionCount" layoutX="1148.0" layoutY="273.0" text="0" />
+            <AnchorPane id="AnchorPane" prefHeight="917.0" prefWidth="1210.0">
+               <children>
+                  <TextField id="tape" fx:id="tape" alignment="CENTER" editable="false" layoutX="26.0" layoutY="59.0" prefHeight="105.0" prefWidth="1158.0" text="1001001">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="77.0" layoutY="215.0" text="Next Instruction:" />
+                  <Label layoutX="246.0" layoutY="246.0" text="Current State" />
+                  <Label layoutX="409.0" layoutY="246.0" text="Current Symbol" />
+                  <Label layoutX="590.0" layoutY="246.0" text="New Symbol" />
+                  <Label layoutX="770.0" layoutY="246.0" text="Direction" />
+                  <Label layoutX="937.0" layoutY="246.0" text="New State" />
+                  <TextField fx:id="currentState" editable="false" layoutX="240.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField id="currentSymbol" fx:id="currentSymbol" editable="false" layoutX="410.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField id="newSymbol" fx:id="newSymbol" editable="false" layoutX="580.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField id="direction" fx:id="direction" editable="false" layoutX="750.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField id="newState" fx:id="newState" editable="false" layoutX="920.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TitledPane alignment="CENTER" animated="false" collapsible="false" layoutX="902.0" layoutY="316.0" prefHeight="581.0" prefWidth="282.0" text="Control Panel">
+                     <content>
+                        <Pane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Button id="startButton" fx:id="startButton1" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleStartButtonAction" prefHeight="25.0" prefWidth="120.0" text="Start" />
+                              <Button fx:id="stepButton1" layoutX="14.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleStepButtonAction" prefHeight="25.0" prefWidth="120.0" text="Step" />
+                              <Button id="stopButton" fx:id="stopButton1" layoutX="14.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Stop" />
+                              <Button id="resetButton" fx:id="resetButton1" layoutX="14.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleResetButtonAction" prefHeight="25.0" prefWidth="120.0" text="Reset" />
+                              <Button id="loadButton" fx:id="loadButton1" layoutX="14.0" layoutY="180.0" mnemonicParsing="false" onAction="#handleLoadButtonAction" prefHeight="25.0" prefWidth="120.0" text="Load" />
+                              <Label layoutX="14.0" layoutY="235.0" text="Speed:" />
+                              <ChoiceBox id="speed" fx:id="speed" layoutX="14.0" layoutY="265.0" prefWidth="150.0" value="100%">
+                                  <items>
+                                      <FXCollections fx:factory="observableArrayList">
+                                      <String fx:value="100%" />
+                                      <String fx:value="50%" />
+                                      <String fx:value="25%" />
+                                      <String fx:value="Instant" />
+                                      </FXCollections>
+                                  </items>
+                              </ChoiceBox>
+                              <Label layoutX="14.0" layoutY="322.0" text="Input:" />
+                              <TextField id="input" fx:id="input" layoutX="14.0" layoutY="354.0" text="1001001" />
+                              <Label id="initialState" layoutX="15.0" layoutY="402.0" text="Initial State:" />
+                              <TextField fx:id="initialState" layoutX="14.0" layoutY="429.0" />
+                           </children>
+                        </Pane>
+                     </content>
+                  </TitledPane>
+                  <MenuBar layoutX="2.0" prefHeight="29.0" prefWidth="1210.0">
+                    <menus>
+                      <Menu mnemonicParsing="false" text="File">
+                        <items>
+                          <MenuItem mnemonicParsing="false" text="Close" />
+                        </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Edit">
+                        <items>
+                          <MenuItem mnemonicParsing="false" text="Delete" />
+                        </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Help">
+                        <items>
+                          <MenuItem mnemonicParsing="false" text="About" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+                  <Label layoutX="26.0" layoutY="290.0" text="State Diagram:" />
+                  <Label layoutX="1025.0" layoutY="273.0" text="Instruction Count:" />
+                  <Label fx:id="instructionCount" layoutX="1148.0" layoutY="273.0" text="0" />
+                  <Pane fx:id="sdPane" layoutX="14.0" layoutY="316.0" prefHeight="581.0" prefWidth="867.0" />
+               </children>
+            </AnchorPane>
          </children>
-      </AnchorPane>
-   </children>
-</Group>
+      </Group>
+   </content>
+</ScrollPane>
