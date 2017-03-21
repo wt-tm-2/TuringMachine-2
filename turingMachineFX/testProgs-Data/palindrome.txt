@@ -1,0 +1,27 @@
+state0 _ _ l state1
+state0 0 0 r state0
+state0 1 1 r state0
+
+state1 _ 1 n halt
+state1 0 _ l state2
+state1 1 _ l state4
+
+state2 _ _ r state3
+state2 0 0 l state2
+state2 1 1 l state2
+
+state3 _ _ n state0
+state3 0 _ r state0
+state3 1 1 n state6
+
+state4 _ _ r state5
+state4 0 0 l state4
+state4 1 1 l state4
+
+state5 _ _ n state0
+state5 0 0 n state6
+state5 1 _ r state0
+
+state6 _ 0 n halt
+state6 0 _ r state6
+state6 1 _ r state6
