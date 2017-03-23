@@ -17,9 +17,9 @@
          <children>
             <AnchorPane id="AnchorPane" prefHeight="917.0" prefWidth="1210.0">
                <children>
-                  <TextField id="tape" fx:id="tape" alignment="CENTER" editable="false" layoutX="26.0" layoutY="59.0" prefHeight="105.0" prefWidth="1158.0" text="1001001">
+                  <TextField id="tape" fx:id="tape1" alignment="CENTER" editable="false" layoutX="26.0" layoutY="59.0" prefHeight="105.0" prefWidth="360.0">
                      <font>
-                        <Font size="50.0" />
+                        <Font size="30.0" />
                      </font>
                   </TextField>
                   <Label layoutX="77.0" layoutY="215.0" text="Next Instruction:" />
@@ -53,10 +53,18 @@
                                       </FXCollections>
                                   </items>
                               </ChoiceBox>
-                              <Label layoutX="14.0" layoutY="322.0" text="Input:" />
+                              <Label layoutX="14.0" layoutY="322.0" text="Input:">
+                                 <tooltip>
+                                    <Tooltip text="Instructions" />
+                                 </tooltip></Label>
                               <TextField id="input" fx:id="input" layoutX="14.0" layoutY="354.0" text="1001001" />
-                              <Label id="initialState" layoutX="15.0" layoutY="402.0" text="Initial State:" />
-                              <TextField fx:id="initialState" layoutX="14.0" layoutY="429.0" />
+                              <Label id="initialState" layoutX="13.0" layoutY="465.0" text="Initial State:" />
+                              <TextField fx:id="initialState" layoutX="13.0" layoutY="495.0" />
+                              <TextField id="input" fx:id="input1" layoutX="13.0" layoutY="394.0" />
+                              <TextField id="input" fx:id="input2" layoutX="13.0" layoutY="431.0" />
+                              <Label layoutX="189.0" layoutY="399.0" text="Tape2" />
+                              <Label layoutX="189.0" layoutY="358.0" text="Tape1" />
+                              <Label layoutX="189.0" layoutY="436.0" text="Tape3" />
                            </children>
                         </Pane>
                      </content>
@@ -84,6 +92,16 @@
                   <Label layoutX="1025.0" layoutY="273.0" text="Instruction Count:" />
                   <Label fx:id="instructionCount" layoutX="1148.0" layoutY="273.0" text="0" />
                   <Pane fx:id="sdPane" layoutX="14.0" layoutY="316.0" prefHeight="581.0" prefWidth="867.0" />
+                  <TextField id="tape" fx:id="tape2" alignment="CENTER" editable="false" layoutX="816.0" layoutY="61.0" prefHeight="105.0" prefWidth="350.0">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </TextField>
+                  <TextField id="tape" fx:id="tape" alignment="CENTER" editable="false" layoutX="429.0" layoutY="61.0" prefHeight="105.0" prefWidth="350.0" text="1001001">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </TextField>
                </children>
             </AnchorPane>
          </children>
