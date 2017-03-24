@@ -42,10 +42,10 @@ public class Parser {
     public static HashMap<String, State> parseSourceFile(String filePath) throws FileNotFoundException {
         Scanner sourceFile = new Scanner(new File(filePath));
 
-	while (sourceFile.hasNextLine()) {
+        while (sourceFile.hasNextLine()) {
             parseSourceLine(sourceFile.nextLine());
-	}
-	sourceFile.close();
+        }
+        sourceFile.close();
         return stateList;
     }
     
@@ -92,6 +92,9 @@ public class Parser {
         State currentState = stateList.get(lexemes[0]);
         if (currentState == null) {
             currentState = new State(lexemes[0]);
+            if (stateList.isEmpty()) {
+                currentState.setIsInitialState(true);
+            }
             stateList.put(lexemes[0], currentState);
         }
         currentState.addTransition(new Transition(lexemes[1], lexemes[2],

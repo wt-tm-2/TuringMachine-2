@@ -50,7 +50,7 @@ public class TMController {
         for (int i = 0, n = tape2.length(); i < n; i++) {
             tape.add(tape2.charAt(i));
         }
-        State state = stateList.get(IS);
+        State state = State.getInitialState(stateList);
         trans = state.getStateTransitions();
         //int next = trans.indexOf(tape.get(index));
         for (int i = 0; i < trans.size(); i++){
@@ -58,9 +58,7 @@ public class TMController {
                 nextTransition = trans.get(i);
             }
         }
-        currentState = IS;
-            
-
+        currentState = state.getStateMnemonic();
     }
     
     /**

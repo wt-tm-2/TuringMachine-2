@@ -122,6 +122,7 @@ public class FXMLDocumentController implements Initializable {
     private void loadFile(){
         try {
             controller.loadData(input.getText(),initialState.getText(),currentFile.getPath());
+            setInitialState();
             sdController = new StateDiagramController(controller.getStateList());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -269,6 +270,12 @@ public class FXMLDocumentController implements Initializable {
         newState.setText(values[4]);
         
     }
+    
+    private void setInitialState() {
+        String[] values = controller.getData();
+        initialState.setText(values[0]);
+    }
+    
 /**
  * Gets the value of the tape stored in the controller method and stores it in the
  * tape field in the GUI.
