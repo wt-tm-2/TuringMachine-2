@@ -27,6 +27,7 @@ public class Parser {
      * their mnemonic.
      */
     private static HashMap<String, State> stateList = new HashMap<>();
+    private static int lineCount = 0;  // keep track of what line we are in the file
     
     /* The expected sequence of tokens */
     private static final int[] TOKEN_SEQUENCE = {
@@ -43,6 +44,7 @@ public class Parser {
         Scanner sourceFile = new Scanner(new File(filePath));
 
         while (sourceFile.hasNextLine()) {
+            lineCount++;
             parseSourceLine(sourceFile.nextLine());
         }
         sourceFile.close();
@@ -107,6 +109,7 @@ public class Parser {
      more sophisticated in the future.
     */
     private static void printParserError(int token, String lexeme) {
-        System.out.println("Expected token " + token + " but got: " + lexeme);
+        System.out.println("Syntax Error Line " + lineCount + ": expected token " + 
+                token + " but got: " + lexeme);
     }
 }

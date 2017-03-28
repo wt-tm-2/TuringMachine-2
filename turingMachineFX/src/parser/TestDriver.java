@@ -17,7 +17,7 @@ public class TestDriver {
     public static void main(String[] args) {
         /* Demo for the parser */
         try {
-            HashMap<String, State> stateList = Parser.parseSourceFile("src/test1.txt");
+            HashMap<String, State> stateList = Parser.parseSourceFile("error3.txt");
             
             /* Loop through the states defined in the source file */
             for (State state : stateList.values()) {
