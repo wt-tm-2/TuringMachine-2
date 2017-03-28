@@ -27,6 +27,7 @@ public class Parser {
      * their mnemonic.
      */
     private static HashMap<String, State> stateList = new HashMap<>();
+    private static int lineCount = 0;  // keep track of what line we are in the file
     
     /* The expected sequence of tokens */
     private static final int[] TOKEN_SEQUENCE = {
@@ -42,10 +43,11 @@ public class Parser {
     public static HashMap<String, State> parseSourceFile(String filePath) throws FileNotFoundException {
         Scanner sourceFile = new Scanner(new File(filePath));
 
-	while (sourceFile.hasNextLine()) {
+        while (sourceFile.hasNextLine()) {
+            lineCount++;
             parseSourceLine(sourceFile.nextLine());
-	}
-	sourceFile.close();
+        }
+        sourceFile.close();
         return stateList;
     }
     
@@ -92,6 +94,9 @@ public class Parser {
         State currentState = stateList.get(lexemes[0]);
         if (currentState == null) {
             currentState = new State(lexemes[0]);
+            if (stateList.isEmpty()) {
+                currentState.setIsInitialState(true);
+            }
             stateList.put(lexemes[0], currentState);
         }
         currentState.addTransition(new Transition(lexemes[1], lexemes[2],
@@ -104,6 +109,7 @@ public class Parser {
      more sophisticated in the future.
     */
     private static void printParserError(int token, String lexeme) {
-        System.out.println("Expected token " + token + " but got: " + lexeme);
+        System.out.println("Syntax Error Line " + lineCount + ": expected token " + 
+                token + " but got: " + lexeme);
     }
 }

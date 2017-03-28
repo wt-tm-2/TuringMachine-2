@@ -2,6 +2,7 @@
 package parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import javafx.scene.shape.Circle;
 
@@ -15,6 +16,7 @@ import javafx.scene.shape.Circle;
  */
 public class State {
     private final String stateMnemonic;
+    private boolean initialState = false;
     private ArrayList<Transition> stateTransitions;
     private Circle stateGraphic;
     
@@ -52,6 +54,23 @@ public class State {
      */
     public String getStateMnemonic() {
         return stateMnemonic;
+    }
+    
+    public boolean isInitialState() {
+        return initialState;
+    }
+    
+    public void setIsInitialState(boolean initialState) {
+        this.initialState = initialState;
+    }
+    
+    public static State getInitialState(HashMap<String, State> stateList) {
+        for (State state : stateList.values()) {
+            if (state.isInitialState()) {
+                return state;
+            }
+        }
+        return null;
     }
     
     public void setGraphicAttributes(double centerX, double centerY, double radius){
