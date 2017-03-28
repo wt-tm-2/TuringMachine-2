@@ -28,6 +28,7 @@ public class Parser {
      */
     private static HashMap<String, State> stateList = new HashMap<>();
     private static int lineCount = 0;  // keep track of what line we are in the file
+    private static StringBuilder syntaxErrors = new StringBuilder();
     
     /* The expected sequence of tokens */
     private static final int[] TOKEN_SEQUENCE = {
@@ -38,9 +39,9 @@ public class Parser {
      * Parses the source file and produces the state list output.
      * @param filePath a path to the source file
      * @return a map containing the Turing Machine states keyed by their mnemonic
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException ParserException
      */
-    public static HashMap<String, State> parseSourceFile(String filePath) throws FileNotFoundException {
+    public static HashMap<String, State> parseSourceFile(String filePath) throws FileNotFoundException, ParserException {
         Scanner sourceFile = new Scanner(new File(filePath));
 
         while (sourceFile.hasNextLine()) {
@@ -48,6 +49,11 @@ public class Parser {
             parseSourceLine(sourceFile.nextLine());
         }
         sourceFile.close();
+        
+        if (syntaxErrors.length() > 0) {
+            throw new ParserException(syntaxErrors.toString());
+        }
+        
         return stateList;
     }
     
@@ -109,7 +115,9 @@ public class Parser {
      more sophisticated in the future.
     */
     private static void printParserError(int token, String lexeme) {
-        System.out.println("Syntax Error Line " + lineCount + ": expected token " + 
-                token + " but got: " + lexeme);
+        String error = "Syntax Error Line " + lineCount +": expected token " +
+                token + " but got: " + lexeme;
+        syntaxErrors.append(error);
+        syntaxErrors.append('\n');
     }
 }

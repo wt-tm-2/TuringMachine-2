@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 import parser.Parser;
+import parser.ParserException;
 import parser.State;
 import turingmachinefx.FXMLDocumentController;
 import parser.Transition;
@@ -42,10 +43,11 @@ public class TMController {
      * turing machine for execution.
      * @param tape2 the tape initially entered in the text box on GUI
      * @param IS the initial state entered in the text box on the GUI
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException
+     * @throws ParserException
      */
     
-    public void loadData(String tape2,String IS, String path) throws FileNotFoundException{
+    public void loadData(String tape2,String IS, String path) throws FileNotFoundException, ParserException {
         stateList = Parser.parseSourceFile(path);
         for (int i = 0, n = tape2.length(); i < n; i++) {
             tape.add(tape2.charAt(i));

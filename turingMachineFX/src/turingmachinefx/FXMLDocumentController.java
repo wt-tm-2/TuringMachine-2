@@ -40,6 +40,7 @@ import StateDiagram.StateDiagramController;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
+import parser.ParserException;
 
 /**
  *
@@ -87,6 +88,8 @@ public class FXMLDocumentController implements Initializable {
     private Stage sourceViewStage;
     @FXML
     private WebView sourceCodeView;
+    @FXML
+    private TextArea syntaxErrorView;
     private boolean sourceViewWindowOpen = false;
     private TMController controller = new TMController();
     private File currentFile;
@@ -126,6 +129,8 @@ public class FXMLDocumentController implements Initializable {
             sdController = new StateDiagramController(controller.getStateList());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserException ex) {
+            syntaxErrorView.setText(ex.getMessage());
         }
     }
     @FXML
@@ -225,7 +230,8 @@ public class FXMLDocumentController implements Initializable {
                     sourceViewWindowOpen = false;
                 });
                 sourceViewStage.setScene(sourceViewScene);
-                sourceCodeView = (WebView) sourceViewScene.lookup("#sourceCodeView");                
+                sourceCodeView = (WebView) sourceViewScene.lookup("#sourceCodeView"); 
+                syntaxErrorView = (TextArea) sourceViewScene.lookup("#syntaxErrorView");
                 sourceViewStage.show();
                 sourceViewWindowOpen = true;
             }
