@@ -30,6 +30,11 @@ public class Token {
      */
     public static final int COMMENT = 3;
     
+    /**
+     *  Tape to switch to
+     */
+    public static final int TAPE = 4;
+    
     /* Map tokens to their regular expression pattern */
     private static final HashMap<Integer, String> TOKEN_REGEX;
     static {
@@ -38,6 +43,7 @@ public class Token {
         TOKEN_REGEX.put(SYMBOL, "\\p{Print}{1}");     // Match any one printable ASCII character
         TOKEN_REGEX.put(DIRECTION, "(r|R|l|L|n|N)");   // Match either right, left, or no direction
         TOKEN_REGEX.put(COMMENT, "\\s*#.*");         // Match white spaced followed by comment char
+        TOKEN_REGEX.put(TAPE, "(1|2|3)");  // Match 1, 2 or 3 for tape
     }
 
     /**

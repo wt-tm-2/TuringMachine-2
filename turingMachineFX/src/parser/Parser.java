@@ -31,7 +31,8 @@ public class Parser {
     
     /* The expected sequence of tokens */
     private static final int[] TOKEN_SEQUENCE = {
-        Token.STATE, Token.SYMBOL, Token.SYMBOL, Token.DIRECTION, Token.STATE
+        Token.STATE, Token.SYMBOL, Token.SYMBOL, Token.DIRECTION, Token.STATE,
+        Token.TAPE
     };
     
     /**
@@ -100,7 +101,7 @@ public class Parser {
             stateList.put(lexemes[0], currentState);
         }
         currentState.addTransition(new Transition(lexemes[1], lexemes[2],
-                lexemes[3], lexemes[4]));
+                lexemes[3], lexemes[4], Integer.valueOf(lexemes[5])));
         
     }
     
