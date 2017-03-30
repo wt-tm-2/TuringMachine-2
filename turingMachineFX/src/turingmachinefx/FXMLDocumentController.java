@@ -94,11 +94,6 @@ public class FXMLDocumentController implements Initializable {
     private StateDiagramController sdController; 
     FileChooser fileChooser = new FileChooser();
     
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        currentState.setText("HI");
-    }
     
     @FXML
     private void handleLoadButtonAction(ActionEvent event) {
