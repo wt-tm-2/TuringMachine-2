@@ -1,16 +1,16 @@
 
 state1 0 0 l state2 1
 state1 1 1 r state3 2
-state1 2 2 n state4 3  # Test comment
+state1 2 2 n state4    # Putting nothing should add "_" to the state transitions for no tape switch
 
 state2 0 0 l state2 1
-state2 1 1 l state3 2
+state2 1 1 l state3 _  # Putting "_" explicitly states no tape switch
 
 state3 0 0 l state3 1
 state3 0 1 l state4 2
 
-state4 0 0 n state4 3
-state4 1 1 n state4 3
+state4 0 0 n state4
+state4 1 1 n state4
 state4 2 2 n state4 3
 
 # Another comment that should be ignored by parser

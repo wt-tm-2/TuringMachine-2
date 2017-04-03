@@ -13,7 +13,7 @@ public class Transition {
     private final String writeSymbol;
     private final String direction;
     private final String newStateMnemonic;
-    private final int tapeIndex;
+    private final String tapeIndex;
     
     /**
      * Creates a new transition object setting all required data.
@@ -23,7 +23,7 @@ public class Transition {
      * @param newStateMnemonic the mnemonic of the new state to transition to
      */
     Transition(String readSymbol, String writeSymbol, String direction, String newStateMnemonic,
-            int tapeIndex) {
+            String tapeIndex) {
         this.readSymbol = readSymbol;
         this.writeSymbol = writeSymbol;
         this.direction = direction;
@@ -67,7 +67,7 @@ public class Transition {
      * 
      * @return The index of the tape to switch to for this transition
      */
-    public int getTapeIndex() {
+    public String getTapeIndex() {
         return tapeIndex;
     }
     
