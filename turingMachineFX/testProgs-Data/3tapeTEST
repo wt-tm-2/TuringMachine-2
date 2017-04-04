@@ -1,0 +1,12 @@
+state1 0 1 r state1 1
+state1 1 0 r state1 1
+state1 _ 1 n state2 2
+
+state2 0 1 r state2 2
+state2 1 0 r state2 2
+state2 _ 1 n state3 3
+
+state3 0 1 r state3 3
+state3 1 0 r state3 3
+state3 _ 1 n halt 3
+
