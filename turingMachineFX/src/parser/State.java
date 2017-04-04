@@ -82,6 +82,10 @@ public class State {
     public Circle getStateGraphic(){
         return stateGraphic;
     }
+    
+    public String getStateID(){
+        return stateGraphic.getId();
+    }
 
     /* Override methods implemented by NetBeans */
     @Override

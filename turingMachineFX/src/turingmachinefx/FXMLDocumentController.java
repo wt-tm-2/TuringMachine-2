@@ -139,6 +139,7 @@ public class FXMLDocumentController implements Initializable {
         stopButton1.setDisable(false);
         instructionCount.setText("0");
         loadButton1.setDisable(false);
+        sdController.clearPane(sdPane);
 }
     @FXML
     private void handleStepButtonAction(ActionEvent event){
