@@ -9,10 +9,14 @@ import Controller.TMController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.event.EventType;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -33,14 +37,14 @@ public class StateDiagramController {
     }
     
     private static double positions [][] = {
-        {50, 50 },
-        {50, 150},
-        {250, 150},
-        {250, 50},
-        {150, 100},
-        {150, 200},
-        {50, 250},
-        {250, 250},
+        {400, 100 },
+        {600, 150},
+        {800, 300},
+        {600, 450},
+        {400, 500},
+        {200, 450},
+        {100, 300},
+        {200, 150},
         {150, 300}
     };
     public void drawStateDiagram(Pane sdPane){
@@ -53,10 +57,9 @@ public class StateDiagramController {
         int i=0;
         
         for(State state  : stateList.values()){
-            Label label = new Label(state.getStateMnemonic());
-            label.setTextFill(Color.BLACK);
+            
             state.setGraphicAttributes(positions[i][0], positions[i][1], 25);
-            state.getStateGraphic().setFill(Color.BLUE);
+            state.getStateGraphic().setFill(Color.LIMEGREEN);
             
             String [] nextStates = getTransitionState(state);
             if(nextStates[0]!=null){
@@ -68,10 +71,14 @@ public class StateDiagramController {
                     }
                 }
             }
-            label.setLayoutX(state.getStateGraphic().getCenterX() - state.getStateGraphic().getRadius());
-            label.setLayoutY(state.getStateGraphic().getCenterY());
-            sdPane.getChildren().addAll(state.getStateGraphic(),label);
             i++;
+        }
+        for(State state: stateList.values()){
+            Label label = new Label(state.getStateMnemonic());
+            label.setTextFill(Color.BLACK);
+            label.setLayoutX(state.getStateGraphic().getCenterX() - state.getStateGraphic().getRadius() +5);
+            label.setLayoutY(state.getStateGraphic().getCenterY() - 8);
+            sdPane.getChildren().addAll(state.getStateGraphic(),label);
         }
     }
     

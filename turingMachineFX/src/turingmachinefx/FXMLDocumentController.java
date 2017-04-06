@@ -37,8 +37,13 @@ import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
 import StateDiagram.StateDiagramController;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 
 /**
@@ -201,6 +206,7 @@ public class FXMLDocumentController implements Initializable {
                                     setTape();
                                     setNextState();
                                     instructionCount.setText(String.valueOf(controller.getIC()));
+                                    currentTape.setText(String.valueOf(controller.getCT()));
                             }
                             });
                                 try {
@@ -321,6 +327,7 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        sdPane.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         
     }    
 
