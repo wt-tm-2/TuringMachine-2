@@ -17,22 +17,22 @@
          <children>
             <AnchorPane id="AnchorPane" prefHeight="917.0" prefWidth="1210.0">
                <children>
-                  <TextField id="tape" fx:id="tape" alignment="CENTER" editable="false" layoutX="26.0" layoutY="59.0" prefHeight="105.0" prefWidth="1158.0" text="1001001">
+                  <TextField id="tape" fx:id="tape3" alignment="CENTER" editable="false" layoutX="95.0" layoutY="142.0" prefHeight="55.0" prefWidth="1100.0">
                      <font>
-                        <Font size="50.0" />
+                        <Font size="30.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="77.0" layoutY="215.0" text="Next Instruction:" />
-                  <Label layoutX="246.0" layoutY="246.0" text="Current State" />
-                  <Label layoutX="409.0" layoutY="246.0" text="Current Symbol" />
-                  <Label layoutX="590.0" layoutY="246.0" text="New Symbol" />
-                  <Label layoutX="770.0" layoutY="246.0" text="Direction" />
-                  <Label layoutX="937.0" layoutY="246.0" text="New State" />
-                  <TextField fx:id="currentState" editable="false" layoutX="240.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
-                  <TextField id="currentSymbol" fx:id="currentSymbol" editable="false" layoutX="410.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
-                  <TextField id="newSymbol" fx:id="newSymbol" editable="false" layoutX="580.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
-                  <TextField id="direction" fx:id="direction" editable="false" layoutX="750.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
-                  <TextField id="newState" fx:id="newState" editable="false" layoutX="920.0" layoutY="203.0" prefHeight="25.0" prefWidth="100.0" />
+                  <Label layoutX="76.0" layoutY="242.0" text="Next Instruction:" />
+                  <Label layoutX="245.0" layoutY="273.0" text="Current State" />
+                  <Label layoutX="408.0" layoutY="273.0" text="Current Symbol" />
+                  <Label layoutX="589.0" layoutY="273.0" text="New Symbol" />
+                  <Label layoutX="769.0" layoutY="273.0" text="Direction" />
+                  <Label layoutX="936.0" layoutY="273.0" text="New State" />
+                  <TextField fx:id="currentState" editable="false" layoutX="239.0" layoutY="230.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField id="currentSymbol" fx:id="currentSymbol" editable="false" layoutX="409.0" layoutY="230.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField id="newSymbol" fx:id="newSymbol" editable="false" layoutX="579.0" layoutY="230.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField id="direction" fx:id="direction" editable="false" layoutX="749.0" layoutY="230.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField id="newState" fx:id="newState" editable="false" layoutX="919.0" layoutY="230.0" prefHeight="25.0" prefWidth="100.0" />
                   <TitledPane alignment="CENTER" animated="false" collapsible="false" layoutX="902.0" layoutY="316.0" prefHeight="581.0" prefWidth="282.0" text="Control Panel">
                      <content>
                         <Pane prefHeight="200.0" prefWidth="200.0">
@@ -41,7 +41,7 @@
                               <Button fx:id="stepButton1" layoutX="14.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleStepButtonAction" prefHeight="25.0" prefWidth="120.0" text="Step" />
                               <Button id="stopButton" fx:id="stopButton1" layoutX="14.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleStopButtonAction" prefHeight="25.0" prefWidth="120.0" text="Stop" />
                               <Button id="resetButton" fx:id="resetButton1" layoutX="14.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleResetButtonAction" prefHeight="25.0" prefWidth="120.0" text="Reset" />
-                              <Button id="loadButton" fx:id="loadButton1" layoutX="14.0" layoutY="180.0" mnemonicParsing="false" onAction="#handleLoadButtonAction" prefHeight="25.0" prefWidth="120.0" text="Load" />
+                              <Button id="loadButton" fx:id="loadButton1" layoutX="14.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleLoadButtonAction" prefHeight="25.0" prefWidth="120.0" text="Load" />
                               <Label layoutX="14.0" layoutY="235.0" text="Speed:" />
                               <ChoiceBox id="speed" fx:id="speed" layoutX="14.0" layoutY="265.0" prefWidth="150.0" value="100%">
                                   <items>
@@ -53,10 +53,18 @@
                                       </FXCollections>
                                   </items>
                               </ChoiceBox>
-                              <Label layoutX="14.0" layoutY="322.0" text="Input:" />
+                              <Label layoutX="14.0" layoutY="322.0" text="Input:">
+                                 <tooltip>
+                                    <Tooltip text="Instructions" />
+                                 </tooltip></Label>
                               <TextField id="input" fx:id="input" layoutX="14.0" layoutY="354.0" text="1001001" />
-                              <Label id="initialState" layoutX="15.0" layoutY="402.0" text="Initial State:" />
-                              <TextField fx:id="initialState" layoutX="14.0" layoutY="429.0" />
+                              <Label id="initialState" layoutX="13.0" layoutY="465.0" text="Initial State:" />
+                              <TextField fx:id="initialState" layoutX="13.0" layoutY="495.0" />
+                              <TextField id="input" fx:id="input1" layoutX="13.0" layoutY="394.0" />
+                              <TextField id="input" fx:id="input2" layoutX="13.0" layoutY="431.0" />
+                              <Label layoutX="189.0" layoutY="399.0" text="Tape2" />
+                              <Label layoutX="189.0" layoutY="358.0" text="Tape1" />
+                              <Label layoutX="189.0" layoutY="436.0" text="Tape3" />
                            </children>
                         </Pane>
                      </content>
@@ -81,9 +89,24 @@
                     </menus>
                   </MenuBar>
                   <Label layoutX="26.0" layoutY="290.0" text="State Diagram:" />
-                  <Label layoutX="1025.0" layoutY="273.0" text="Instruction Count:" />
-                  <Label fx:id="instructionCount" layoutX="1148.0" layoutY="273.0" text="0" />
-                  <Pane fx:id="sdPane" layoutX="14.0" layoutY="316.0" onMouseClicked="#handleSDClicked" onMouseDragged="#handleSDDragged" prefHeight="581.0" prefWidth="867.0" />
+                  <Label layoutX="1034.0" layoutY="288.0" text="Instruction Count:" />
+                  <Label fx:id="instructionCount" layoutX="1159.0" layoutY="288.0" text="0" />
+                  <Pane fx:id="sdPane" layoutX="14.0" layoutY="316.0" prefHeight="581.0" prefWidth="867.0" />
+                  <TextField id="tape" fx:id="tape2" alignment="CENTER" editable="false" layoutX="95.0" layoutY="87.0" prefHeight="55.0" prefWidth="1100.0">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </TextField>
+                  <TextField id="tape" fx:id="tape" alignment="CENTER" editable="false" layoutX="96.0" layoutY="32.0" prefHeight="55.0" prefWidth="1099.0" text="1001001">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="44.0" layoutY="51.0" text="Tape1" />
+                  <Label layoutX="44.0" layoutY="107.0" text="Tape2" />
+                  <Label layoutX="44.0" layoutY="162.0" text="Tape3" />
+                  <Label layoutX="1034.0" layoutY="266.0" text="Current Tape:" />
+                  <Label fx:id="currentTape" layoutX="1132.0" layoutY="266.0" text="1" />
                </children>
             </AnchorPane>
          </children>

@@ -13,6 +13,7 @@ public class Transition {
     private final String writeSymbol;
     private final String direction;
     private final String newStateMnemonic;
+    private final String tapeIndex;
     
     /**
      * Creates a new transition object setting all required data.
@@ -21,11 +22,13 @@ public class Transition {
      * @param direction the direction to move the read/write head after writing
      * @param newStateMnemonic the mnemonic of the new state to transition to
      */
-    Transition(String readSymbol, String writeSymbol, String direction, String newStateMnemonic) {
+    Transition(String readSymbol, String writeSymbol, String direction, String newStateMnemonic,
+            String tapeIndex) {
         this.readSymbol = readSymbol;
         this.writeSymbol = writeSymbol;
         this.direction = direction;
         this.newStateMnemonic = newStateMnemonic;
+        this.tapeIndex = tapeIndex;
     }
 
     /**
@@ -59,5 +62,13 @@ public class Transition {
     public String getNewState() {
         return newStateMnemonic;
     }
-   
+    
+    /**
+     * 
+     * @return The index of the tape to switch to for this transition
+     */
+    public String getTapeIndex() {
+        return tapeIndex;
+    }
+    
 }

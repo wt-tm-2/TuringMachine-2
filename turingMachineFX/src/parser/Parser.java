@@ -4,6 +4,7 @@ package parser;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -31,8 +32,10 @@ public class Parser {
     
     /* The expected sequence of tokens */
     private static final int[] TOKEN_SEQUENCE = {
-        Token.STATE, Token.SYMBOL, Token.SYMBOL, Token.DIRECTION, Token.STATE
+        Token.STATE, Token.SYMBOL, Token.SYMBOL, Token.DIRECTION, Token.STATE,
+        Token.TAPE
     };
+    private static final int tokensLength = TOKEN_SEQUENCE.length;
     
     /**
      * Parses the source file and produces the state list output.
@@ -60,12 +63,22 @@ public class Parser {
         }
         boolean parseError = false;
         String[] lexemes = sourceLine.split("\\s+");
-        for (int i = 0; i < TOKEN_SEQUENCE.length; i++) {
+        for (int i = 0; i < tokensLength - 1; i++) {
             if (!Token.lexemeMatches(TOKEN_SEQUENCE[i], lexemes[i])) {
                 printParserError(TOKEN_SEQUENCE[i], lexemes[i]);
                 parseError = true;
                 break;
             }
+        }
+        /* Check for the tape switch if any */
+        if (lexemes.length == tokensLength) {
+            if (!Token.lexemeMatches(TOKEN_SEQUENCE[tokensLength - 1], lexemes[tokensLength - 1])) {
+                printParserError(TOKEN_SEQUENCE[tokensLength - 1], lexemes[tokensLength -1]);
+                parseError = true;
+            }
+        } else {
+            lexemes = Arrays.copyOf(lexemes, tokensLength);
+            lexemes[tokensLength - 1] = "_";
         }
         if (!parseError) {
             addStateTransition(lexemes);
@@ -100,7 +113,7 @@ public class Parser {
             stateList.put(lexemes[0], currentState);
         }
         currentState.addTransition(new Transition(lexemes[1], lexemes[2],
-                lexemes[3], lexemes[4]));
+                lexemes[3], lexemes[4], lexemes[5]));
         
     }
     
