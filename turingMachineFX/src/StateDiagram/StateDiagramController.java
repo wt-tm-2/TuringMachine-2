@@ -20,6 +20,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import parser.State;
@@ -48,26 +50,38 @@ public class StateDiagramController {
         {150, 300}
     };
     public void drawStateDiagram(Pane sdPane){
-        Group group = new Group();
+        //Group group = new Group();
         
-        StackPane sPane = new StackPane();
+        //StackPane sPane = new StackPane();
         
-        int numStates = TMController.getSize();
-        Circle stateNodes = new Circle();
+        //int numStates = TMController.getSize();
+        //Circle stateNodes = new Circle();
         int i=0;
         
         for(State state  : stateList.values()){
             
             state.setGraphicAttributes(positions[i][0], positions[i][1], 25);
-            state.getStateGraphic().setFill(Color.LIMEGREEN);
+            state.getStateGraphic().setFill(Color.AQUA);
             
             String [] nextStates = getTransitionState(state);
             if(nextStates[0]!=null){
                 for(String nState : nextStates){
                     if(!nState.equalsIgnoreCase("halt")){
-                        Line line = new Line();
-                        connectCircles(state.getStateGraphic(),stateList.get(nState).getStateGraphic(),line);
-                        sdPane.getChildren().add(line);
+                        if(state.getStateMnemonic().equalsIgnoreCase(nState)){
+                            int yValue;
+                            if(state.getStateGraphic().getCenterY()>300)
+                                yValue = 1;
+                            else
+                                yValue = 0;
+                            Arc loop = new Arc();
+                            drawLoop(state.getStateGraphic(), loop,yValue);
+                            sdPane.getChildren().add(loop);
+                        }
+                        else{
+                            Line line = new Line();
+                            connectCircles(state.getStateGraphic(),stateList.get(nState).getStateGraphic(),line);
+                            sdPane.getChildren().add(line);
+                        }
                     }
                 }
             }
@@ -96,6 +110,19 @@ public class StateDiagramController {
         line.startYProperty().bind(c1.centerYProperty());
         line.endXProperty().bind(c2.centerXProperty());
         line.endYProperty().bind(c2.centerYProperty());
+    }
+    
+    private void drawLoop(Circle c1, Arc arc, int y){
+        double startAngle = 180*y;
+        arc.setFill(Color.TRANSPARENT);
+        arc.setStroke(Color.BLACK);
+        arc.setType(ArcType.OPEN);
+        arc.setCenterX(c1.getCenterX());
+        arc.setCenterY(c1.getCenterY());
+        arc.setRadiusX(20);
+        arc.setRadiusY(50);
+        arc.setStartAngle(startAngle);
+        arc.setLength(180);
     }
     
     public void clearPane(Pane sdPane){

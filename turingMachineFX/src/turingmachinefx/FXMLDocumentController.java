@@ -117,6 +117,7 @@ public class FXMLDocumentController implements Initializable {
         currentFile = fileChooser.showOpenDialog(node.getScene().getWindow());
         startSourceView();
         loadFile();
+        sdController.clearPane(sdPane);
         tape.setText(input.getText());
         tape2.setText(input1.getText());
         tape3.setText(input2.getText());
@@ -124,7 +125,7 @@ public class FXMLDocumentController implements Initializable {
         stepButton1.setDisable(false);
         stopButton1.setDisable(false);
         input.setEditable(false);
-        loadButton1.setDisable(true);
+        loadButton1.setDisable(false);
         setNextState();
         sdController.drawStateDiagram(sdPane);
         
@@ -151,7 +152,6 @@ public class FXMLDocumentController implements Initializable {
         stopButton1.setDisable(false);
         instructionCount.setText("0");
         loadButton1.setDisable(false);
-        sdController.clearPane(sdPane);
 }
     @FXML
     private void handleStepButtonAction(ActionEvent event){
