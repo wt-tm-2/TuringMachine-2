@@ -6,6 +6,7 @@
 package turingmachinefx;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,7 +25,9 @@ public class TuringMachineFX extends Application {
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        stage.setTitle("WTAMU CS Turing Machine Simulator");
         stage.show();
+        stage.setOnHidden(e -> Platform.exit());
     }
 
     /**
