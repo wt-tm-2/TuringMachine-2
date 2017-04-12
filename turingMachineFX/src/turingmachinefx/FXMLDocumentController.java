@@ -37,8 +37,13 @@ import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
 import StateDiagram.StateDiagramController;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import parser.ParserException;
 
@@ -67,7 +72,15 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextField input;
     @FXML
+    private TextField input1;
+    @FXML
+    private TextField input2;
+    @FXML
     private TextField tape;
+    @FXML
+    private TextField tape2;
+    @FXML
+    private TextField tape3;
     @FXML
     private Button startButton1;
     @FXML
@@ -80,6 +93,8 @@ public class FXMLDocumentController implements Initializable {
     private Button loadButton1;
     @FXML
     private Label instructionCount;
+    @FXML
+    private Label currentTape;
     @FXML
     private ChoiceBox speed;
     @FXML
@@ -97,11 +112,6 @@ public class FXMLDocumentController implements Initializable {
     private StateDiagramController sdController; 
     FileChooser fileChooser = new FileChooser();
     
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        currentState.setText("HI");
-    }
     
     @FXML
     private void handleLoadButtonAction(ActionEvent event) {
@@ -110,12 +120,15 @@ public class FXMLDocumentController implements Initializable {
         currentFile = fileChooser.showOpenDialog(node.getScene().getWindow());
         startSourceView();
         loadFile();
+        sdController.clearPane(sdPane);
         tape.setText(input.getText());
+        tape2.setText(input1.getText());
+        tape3.setText(input2.getText());
         startButton1.setDisable(false);
         stepButton1.setDisable(false);
         stopButton1.setDisable(false);
         input.setEditable(false);
-        loadButton1.setDisable(true);
+        loadButton1.setDisable(false);
         setNextState();
         sdController.drawStateDiagram(sdPane);
         
@@ -124,12 +137,14 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void loadFile(){
         try {
-            controller.loadData(input.getText(),initialState.getText(),currentFile.getPath());
+            controller.loadData(input.getText(),input1.getText(),input2.getText(),initialState.getText(),currentFile.getPath());
+            syntaxErrorView.setText(currentFile.getName() + " compiled successfully.");
             setInitialState();
             sdController = new StateDiagramController(controller.getStateList());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserException ex) {
+            syntaxErrorView.setVisible(true);
             syntaxErrorView.setText(ex.getMessage());
         }
     }
@@ -151,6 +166,7 @@ public class FXMLDocumentController implements Initializable {
         setTape();
         setNextState();
         instructionCount.setText(String.valueOf(controller.getIC()));
+        currentTape.setText(String.valueOf(controller.getCT()));
         if (x == 1){
             halt();
         }
@@ -197,6 +213,7 @@ public class FXMLDocumentController implements Initializable {
                                     setTape();
                                     setNextState();
                                     instructionCount.setText(String.valueOf(controller.getIC()));
+                                    currentTape.setText(String.valueOf(controller.getCT()));
                             }
                             });
                                 try {
@@ -275,6 +292,7 @@ public class FXMLDocumentController implements Initializable {
         direction.setText(values[3]);
         newState.setText(values[4]);
         
+        int lineNumber = controller.getNextTransition().getLineNumber();
     }
     
     private void setInitialState() {
@@ -288,12 +306,25 @@ public class FXMLDocumentController implements Initializable {
  */
     @FXML
     public void setTape(){
-        Vector<Character> tapeVector = controller.getTape();
+        Vector<Character> tapeVector = controller.getTape1();
         String newTape = new String();
         for(int i = 0; i < tapeVector.size(); i++){
             newTape = newTape + tapeVector.get(i);
         }
         tape.setText(newTape);
+        tapeVector = controller.getTape2();
+        newTape ="";
+        for(int i = 0; i < tapeVector.size(); i++){
+            newTape = newTape + tapeVector.get(i);
+        }
+        tape2.setText(newTape);
+        tapeVector = controller.getTape3();
+        newTape ="";
+        for(int i = 0; i < tapeVector.size(); i++){
+            newTape = newTape + tapeVector.get(i);
+        }
+        tape3.setText(newTape);
+        
     }
     
     public void halt(){
@@ -305,6 +336,7 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        sdPane.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         
     }    
 
