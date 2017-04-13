@@ -28,7 +28,7 @@ public class Parser {
      * their mnemonic.
      */
     private static HashMap<String, State> stateList = new HashMap<>();
-    private static int lineCount = 0;  // keep track of what line we are in the file
+    private static int lineCount;  // keep track of what line we are in the file
     private static StringBuilder syntaxErrors = new StringBuilder();
     
     /* The expected sequence of tokens */
@@ -47,7 +47,7 @@ public class Parser {
      */
     public static HashMap<String, State> parseSourceFile(String filePath) throws FileNotFoundException, ParserException {
         Scanner sourceFile = new Scanner(new File(filePath));
-
+        lineCount = 0;
         while (sourceFile.hasNextLine()) {
             lineCount++;
             parseSourceLine(sourceFile.nextLine());

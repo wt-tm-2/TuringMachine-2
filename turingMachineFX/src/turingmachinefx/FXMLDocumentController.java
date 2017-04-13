@@ -37,6 +37,9 @@ import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
 import StateDiagram.StateDiagramController;
+import java.util.HashSet;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -105,6 +108,7 @@ public class FXMLDocumentController implements Initializable {
     private WebView sourceCodeView;
     @FXML
     private TextArea syntaxErrorView;
+    private String sourceCodeHtml;
     private boolean sourceViewWindowOpen = false;
     private TMController controller = new TMController();
     private File currentFile;
@@ -261,16 +265,18 @@ public class FXMLDocumentController implements Initializable {
     }
     
     private void writeSourceLines() throws FileNotFoundException {
+        int lineCount = 0;
         Scanner scanner = new Scanner(currentFile);
         StringBuilder sb = new StringBuilder();
         while (scanner.hasNextLine()) {
-            sb.append("<span>");
+            lineCount++;
+            sb.append("<span id=\"").append(lineCount).append("\">");
             sb.append(scanner.nextLine());
             sb.append("</span>");
         }
+
         InputStream inputStream =  getClass().getClassLoader().getResourceAsStream(
                 "resources/sourceCodeView.html");
-        String sourceCodeHtml;
         try(Scanner s = new Scanner(inputStream)) { 
             sourceCodeHtml = s.useDelimiter("\\A").next();
         }
@@ -293,8 +299,33 @@ public class FXMLDocumentController implements Initializable {
         newState.setText(values[4]);
         
         int lineNumber = controller.getNextTransition().getLineNumber();
+        highlight(lineNumber);
     }
     
+    private void highlight(int lineNumber) {
+        String idLine = "id=\"" + lineNumber + "\"";
+        String highlightStyle = "style=\"background-color:blue;color:white;\"";
+        sourceCodeHtml = sourceCodeHtml.replaceFirst(highlightStyle, "");
+        sourceCodeHtml = sourceCodeHtml.replaceFirst(idLine, idLine + " " + highlightStyle);
+        sourceCodeView.getEngine().getLoadWorker().stateProperty().addListener((ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) -> {
+            if( newValue != Worker.State.SUCCEEDED ) {
+                return;
+            }
+            String jsAutoScroll = "var ele = document.getElementById(\"" + lineNumber + "\");"
+                    + "ele.scrollIntoView();";
+            sourceCodeView.getEngine().executeScript(jsAutoScroll);
+            // Your logic here
+        });
+        sourceCodeView.getEngine().loadContent(sourceCodeHtml);
+        scrollSourceView(lineNumber);
+    }
+                
+    private void scrollSourceView(int lineNumber) {
+        String jsAutoScroll = "var ele = document.getElementById(\"" + lineNumber + "\");"
+                + "ele.scrollIntoView();";
+        sourceCodeView.getEngine().executeScript(jsAutoScroll);
+    }
+  
     private void setInitialState() {
         String[] values = controller.getData();
         initialState.setText(values[0]);
