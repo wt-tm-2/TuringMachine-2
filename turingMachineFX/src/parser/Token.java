@@ -45,6 +45,15 @@ public class Token {
         TOKEN_REGEX.put(COMMENT, "\\s*#.*");         // Match white spaced followed by comment char
         TOKEN_REGEX.put(TAPE, "(_|1|2|3)");  // Match 1, 2 or 3 for tape index or _ for current tape
     }
+    
+    /* Description of  tokens */
+    public static final String[] TOKEN_DESCRIPTIONS = {
+        "state mnemonic",
+        "read or write symbol (an ASCII character)",
+        "move direction (l or L for left, r or R for right, n or N for no direction)",
+        "comment character '#'",
+        "tape switch ('_' for current tape, or '1', '2', or '3')"
+    };
 
     /**
      * Tests whether the lexeme matches the expected token.

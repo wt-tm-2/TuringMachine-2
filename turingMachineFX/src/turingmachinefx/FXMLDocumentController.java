@@ -142,7 +142,6 @@ public class FXMLDocumentController implements Initializable {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserException ex) {
-            syntaxErrorView.setVisible(true);
             syntaxErrorView.setText(ex.getMessage());
         }
     }
@@ -247,6 +246,7 @@ public class FXMLDocumentController implements Initializable {
                 sourceViewStage.setScene(sourceViewScene);
                 sourceCodeView = (WebView) sourceViewScene.lookup("#sourceCodeView"); 
                 syntaxErrorView = (TextArea) sourceViewScene.lookup("#syntaxErrorView");
+                syntaxErrorView.setWrapText(true);
                 sourceViewStage.show();
                 sourceViewWindowOpen = true;
             }

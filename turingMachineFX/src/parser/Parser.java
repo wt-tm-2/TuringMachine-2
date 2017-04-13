@@ -129,8 +129,8 @@ public class Parser {
      more sophisticated in the future.
     */
     private static void printParserError(int token, String lexeme) {
-        String error = "Syntax Error Line " + lineCount +": expected token " +
-                token + " but got: " + lexeme;
+        String error = "Syntax Error Line " + lineCount +": expected a " +
+                Token.TOKEN_DESCRIPTIONS[token] + " but got: " + lexeme;
         syntaxErrors.append(error);
         syntaxErrors.append('\n');
     }

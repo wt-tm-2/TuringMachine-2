@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="847.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="847.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <WebView fx:id="sourceCodeView" prefHeight="591.0" prefWidth="603.0" />
-      <TextArea fx:id="syntaxErrorView" layoutX="15.0" layoutY="613.0" prefHeight="219.0" prefWidth="578.0" />
+      <TextArea fx:id="syntaxErrorView" editable="false" layoutX="15.0" layoutY="613.0" prefHeight="219.0" prefWidth="578.0" />
    </children>
 </AnchorPane>
