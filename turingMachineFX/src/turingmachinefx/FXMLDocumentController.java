@@ -25,8 +25,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import Controller.TMController;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -35,17 +33,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.concurrent.*;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
-import javafx.scene.text.Font;
 import StateDiagram.StateDiagramController;
-import java.util.HashSet;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import parser.ParserException;
@@ -307,22 +301,20 @@ public class FXMLDocumentController implements Initializable {
         String highlightStyle = "style=\"background-color:blue;color:white;\"";
         sourceCodeHtml = sourceCodeHtml.replaceFirst(highlightStyle, "");
         sourceCodeHtml = sourceCodeHtml.replaceFirst(idLine, idLine + " " + highlightStyle);
-        sourceCodeView.getEngine().getLoadWorker().stateProperty().addListener((ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) -> {
+        sourceCodeView.getEngine().getLoadWorker().stateProperty().addListener(
+                (ObservableValue<? extends Worker.State> observable, 
+                        Worker.State oldValue, Worker.State newValue) -> {
             if( newValue != Worker.State.SUCCEEDED ) {
                 return;
             }
-            String jsAutoScroll = "var ele = document.getElementById(\"" + lineNumber + "\");"
-                    + "ele.scrollIntoView();";
-            sourceCodeView.getEngine().executeScript(jsAutoScroll);
-            // Your logic here
+            scrollSourceView(lineNumber);
         });
         sourceCodeView.getEngine().loadContent(sourceCodeHtml);
-        scrollSourceView(lineNumber);
     }
                 
     private void scrollSourceView(int lineNumber) {
         String jsAutoScroll = "var ele = document.getElementById(\"" + lineNumber + "\");"
-                + "ele.scrollIntoView();";
+                + "document.body.scrollTop = ele.offsetTop - 150;";
         sourceCodeView.getEngine().executeScript(jsAutoScroll);
     }
   
