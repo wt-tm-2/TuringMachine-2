@@ -5,25 +5,20 @@
  */
 package StateDiagram;
 
-import Controller.TMController;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.transform.Rotate;
 import parser.State;
 import parser.Transition;
 
@@ -50,19 +45,15 @@ public class StateDiagramController {
         {150, 300}
     };
     public void drawStateDiagram(Pane sdPane){
-        //Group group = new Group();
-        
-        //StackPane sPane = new StackPane();
-        
-        //int numStates = TMController.getSize();
-        //Circle stateNodes = new Circle();
+
         int i=0;
-        
-        for(State state  : stateList.values()){
-            
+        for(State state : stateList.values()){
             state.setGraphicAttributes(positions[i][0], positions[i][1], 25);
             state.getStateGraphic().setFill(Color.AQUA);
-            
+            i++;
+        }
+        
+        for(State state  : stateList.values()){
             String [] nextStates = getTransitionState(state);
             if(nextStates[0]!=null){
                 for(String nState : nextStates){
@@ -73,19 +64,14 @@ public class StateDiagramController {
                                 yValue = 1;
                             else
                                 yValue = 0;
-                            Arc loop = new Arc();
-                            drawLoop(state.getStateGraphic(), loop,yValue);
-                            sdPane.getChildren().add(loop);
+                            drawLoop(state.getStateGraphic(),yValue,sdPane);
                         }
                         else{
-                            Line line = new Line();
-                            connectCircles(state.getStateGraphic(),stateList.get(nState).getStateGraphic(),line);
-                            sdPane.getChildren().add(line);
+                            connectCircles(state.getStateGraphic(),stateList.get(nState).getStateGraphic(),sdPane);                         
                         }
                     }
                 }
             }
-            i++;
         }
         for(State state: stateList.values()){
             Label label = new Label(state.getStateMnemonic());
@@ -105,14 +91,18 @@ public class StateDiagramController {
         return newStates;
     }
     
-    private void connectCircles(Circle c1, Circle c2, Line line){
+    private void connectCircles(Circle c1, Circle c2, Pane sdPane){
+        Line line = new Line();
         line.startXProperty().bind(c1.centerXProperty());
         line.startYProperty().bind(c1.centerYProperty());
         line.endXProperty().bind(c2.centerXProperty());
         line.endYProperty().bind(c2.centerYProperty());
+        sdPane.getChildren().add(line);
+        drawLabel(c1, c2, "Transition", sdPane);
     }
     
-    private void drawLoop(Circle c1, Arc arc, int y){
+    private void drawLoop(Circle c1, int y, Pane sdPane){
+        Arc arc = new Arc();
         double startAngle = 180*y;
         arc.setFill(Color.TRANSPARENT);
         arc.setStroke(Color.BLACK);
@@ -123,8 +113,24 @@ public class StateDiagramController {
         arc.setRadiusY(50);
         arc.setStartAngle(startAngle);
         arc.setLength(180);
+        sdPane.getChildren().add(arc);
     }
     
+    private void drawLabel(Circle c1, Circle c2, String transition, Pane sdPane){
+        double angle;
+        if(c2.getCenterX()==c1.getCenterX())
+            angle = 90;
+        else
+            angle = Math.toDegrees(Math.atan((c2.getCenterY()-c1.getCenterY())/(c2.getCenterX()-c1.getCenterX())));
+        Label trans = new Label();       
+        trans.setText(transition);
+        trans.relocate((c1.getCenterX()+c2.getCenterX())/2, (c1.getCenterY()+c2.getCenterY())/2);
+        
+        trans.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        trans.getTransforms().add(new Rotate(angle,0,0));
+        sdPane.getChildren().add(trans);
+    }
+       
     public void clearPane(Pane sdPane){
         sdPane.getChildren().clear();
     }
