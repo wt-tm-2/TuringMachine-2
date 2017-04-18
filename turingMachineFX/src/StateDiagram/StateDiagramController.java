@@ -64,10 +64,10 @@ public class StateDiagramController {
                                 yValue = 1;
                             else
                                 yValue = 0;
-                            drawLoop(state.getStateGraphic(),yValue,sdPane);
+                            drawLoop(transitionLabel(state, nState),state.getStateGraphic(),yValue,sdPane);
                         }
                         else{
-                            connectCircles(state.getStateGraphic(),stateList.get(nState).getStateGraphic(),sdPane);                         
+                            connectCircles(transitionLabel(state, nState),state.getStateGraphic(),stateList.get(nState).getStateGraphic(),sdPane);
                         }
                     }
                 }
@@ -91,17 +91,30 @@ public class StateDiagramController {
         return newStates;
     }
     
-    private void connectCircles(Circle c1, Circle c2, Pane sdPane){
+    
+    private void connectCircles(String label, Circle c1, Circle c2, Pane sdPane){
         Line line = new Line();
         line.startXProperty().bind(c1.centerXProperty());
         line.startYProperty().bind(c1.centerYProperty());
         line.endXProperty().bind(c2.centerXProperty());
         line.endYProperty().bind(c2.centerYProperty());
         sdPane.getChildren().add(line);
-        drawLabel(c1, c2, "Transition", sdPane);
+        drawLabel(c1, c2, label, sdPane);
     }
     
-    private void drawLoop(Circle c1, int y, Pane sdPane){
+    private String transitionLabel(State state, String nState){
+        String lbl = "";
+        for(int j = 0; j < state.getStateTransitions().size(); j++){
+            if(state.getStateTransitions().get(j).getNewState().equals(nState)){
+                lbl += "(" +state.getStateTransitions().get(j).getReadSymbol() + ", " +
+                        state.getStateTransitions().get(j).getWriteSymbol() + ", " +
+                        state.getStateTransitions().get(j).getDirection() + ")";
+            }
+        }
+        return lbl;
+    }
+    
+    private void drawLoop(String label, Circle c1, int y, Pane sdPane){
         Arc arc = new Arc();
         double startAngle = 180*y;
         arc.setFill(Color.TRANSPARENT);
@@ -114,12 +127,14 @@ public class StateDiagramController {
         arc.setStartAngle(startAngle);
         arc.setLength(180);
         sdPane.getChildren().add(arc);
+        drawArcLabel(c1,label,sdPane);
+        
     }
     
     private void drawLabel(Circle c1, Circle c2, String transition, Pane sdPane){
         double angle;
         if(c2.getCenterX()==c1.getCenterX())
-            angle = 90;
+            angle = 0;
         else
             angle = Math.toDegrees(Math.atan((c2.getCenterY()-c1.getCenterY())/(c2.getCenterX()-c1.getCenterX())));
         Label trans = new Label();       
@@ -128,6 +143,19 @@ public class StateDiagramController {
         
         trans.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         trans.getTransforms().add(new Rotate(angle,0,0));
+        sdPane.getChildren().add(trans);
+    }
+    
+    private void drawArcLabel(Circle c1, String transition, Pane sdPane){
+        double y;
+        if(c1.getCenterY() > 300)
+            y = 52;
+        else
+            y = -65;
+        Label trans = new Label();
+        trans.setText(transition);
+        trans.relocate(c1.getCenterX(), c1.getCenterY()+y);
+        trans.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         sdPane.getChildren().add(trans);
     }
        
