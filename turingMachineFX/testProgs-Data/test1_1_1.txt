@@ -1,0 +1,8 @@
+
+
+state1 a b r state1
+state1 b a r state1
+state1 _ c n halt
+
+
+# Another comment that should be ignored by parser

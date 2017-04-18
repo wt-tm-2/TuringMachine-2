@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author WTSTUDENTS\zg977947
+ * @author Anthony Thornton, Michael Johnson, Zach Gutierrez
  */
 public class TuringMachineFX extends Application {
     

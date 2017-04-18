@@ -46,6 +46,8 @@
                               <ChoiceBox id="speed" fx:id="speed" layoutX="14.0" layoutY="265.0" prefWidth="150.0" value="100%">
                                   <items>
                                       <FXCollections fx:factory="observableArrayList">
+                                      <String fx:value="500%" /> 
+                                      <String fx:value="200%" />
                                       <String fx:value="100%" />
                                       <String fx:value="50%" />
                                       <String fx:value="25%" />
@@ -74,11 +76,6 @@
                       <Menu mnemonicParsing="false" text="File">
                         <items>
                           <MenuItem mnemonicParsing="false" text="Close" />
-                        </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Edit">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Delete" />
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Help">
