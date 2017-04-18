@@ -46,7 +46,7 @@ import parser.ParserException;
 
 /**
  *
- * @author WTSTUDENTS\zg977947
+ * @author Anthony Thornton, Michael Johnson, Zach Gutierrez
  */
 public class FXMLDocumentController implements Initializable {
     
@@ -110,7 +110,10 @@ public class FXMLDocumentController implements Initializable {
     private StateDiagramController sdController; 
     FileChooser fileChooser = new FileChooser();
     
-    
+    /*
+    Executes when load button is clicked. This method loads data into the turing machine
+    from a file as well as loads the tape text values into the tape fields of the GUI.
+    */
     @FXML
     private void handleLoadButtonAction(ActionEvent event) {
         controller.resetData();
@@ -125,12 +128,16 @@ public class FXMLDocumentController implements Initializable {
         startButton1.setDisable(false);
         stepButton1.setDisable(false);
         stopButton1.setDisable(false);
+        resetButton1.setDisable(false);
         input.setEditable(false);
+        input2.setEditable(false);
+        input1.setEditable(false);
         loadButton1.setDisable(false);
         setNextState();
         sdController.drawStateDiagram(sdPane);
         
     }
+    
     
     @FXML
     private void loadFile(){
@@ -145,6 +152,10 @@ public class FXMLDocumentController implements Initializable {
             syntaxErrorView.setText(ex.getMessage());
         }
     }
+    /*
+    Executes when reset button is clicked. Resets data back to as if the file was
+    just loaded but no execution of the code has been performed.
+    */
     @FXML
     private void handleResetButtonAction(ActionEvent event) {
         controller.resetData();
@@ -157,6 +168,11 @@ public class FXMLDocumentController implements Initializable {
         instructionCount.setText("0");
         loadButton1.setDisable(false);
 }
+    /*
+    Executes when step button is clicked. Calls the controller to step the program and
+    then sets the values of the instruction counter and current tape fields. Also, halts the program if 
+    the next state is the halt state.
+    */
     @FXML
     private void handleStepButtonAction(ActionEvent event){
         int x = controller.step();
@@ -192,6 +208,10 @@ public class FXMLDocumentController implements Initializable {
             case "Instant": delay = 0;
                 break;
             case "100%": delay = 500;
+                break;
+            case "200%": delay = 250;
+                break;
+            case "500%": delay = 100;
                 break;
             case "50%": delay = 1000;
                 break;
@@ -229,6 +249,10 @@ public class FXMLDocumentController implements Initializable {
             }  
             }.start();
     }
+    /*
+    Executes when stop button is clicked. Changes the value of a global variable to stop
+    execution of the loop in the thread created by the run method.
+    */
     @FXML
     private void handleStopButtonAction(ActionEvent event){
         killThread = true;
@@ -349,7 +373,10 @@ public class FXMLDocumentController implements Initializable {
         tape3.setText(newTape);
         
     }
-    
+    /*
+    Executes when halt state is reached. Disables buttons requiring the reset button
+    to be clicked to execute the code again.
+    */
     public void halt(){
         startButton1.setDisable(true);
         stepButton1.setDisable(true);
@@ -360,7 +387,9 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         sdPane.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        
+        startButton1.setDisable(true);
+        stepButton1.setDisable(true);
+        resetButton1.setDisable(true);
     }    
 
     

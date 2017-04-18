@@ -93,7 +93,9 @@ public class TMController {
         currentTape = 1;
         }
     }
-    
+    /*
+    Checks on which tape is the current tape and performs a step on the turing machine
+    */
     public int step(){
         int x = 0;
         if (currentTape == 1){
@@ -123,7 +125,6 @@ public class TMController {
      * Executes the current line in the turing machine and then finds the next
      * step to be executed.
      */
-    //Need to fix issue when switching states. probably gotta split this in 2 methods
     public int stepPart1(int[] index, Vector<Character> tape){
         tape.set(index[0], nextTransition.getWriteSymbol().charAt(0));
         if (nextTransition.getDirection().equals("l") || nextTransition.getDirection().equals("L")){
@@ -148,7 +149,9 @@ public class TMController {
         return 0;
         }
     }
-    
+    /*
+    Prepares the next instruction to be able to be executed next time stepPart1 is called
+    */
     public int stepPart2(int[] index, Vector<Character> tape){
         if (tape.size() == index[0]){
             tape.add("_".charAt(0));
