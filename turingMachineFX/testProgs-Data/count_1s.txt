@@ -1,0 +1,16 @@
+
+#
+# This Turing Machine sim program will count the 1's 
+# in a binary string stored on tape 1 with tally marks 
+# on tape 2.
+#
+# Used to test WTAMU CS Turing Machine Simulator by 
+# Michael Johnson, Zach Gutierrez, and Anthony Thornton.
+#
+
+count_1s 0 0 r count_1s _
+count_1s 1 1 r tally    2
+count_1s _ _ n halt
+  
+tally 1 1 r tally    _
+tally _ 1 n count_1s 1

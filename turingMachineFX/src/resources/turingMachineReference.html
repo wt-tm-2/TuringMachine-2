@@ -1,0 +1,183 @@
+<!-- The XHTML and PHP source for this page
+Copyright (c) 2004 Jeffrey Elkner
+Permission is granted to copy, distribute and/or modify this
+document under the terms of the GNU Free Documentation License,
+Version 1.2  or any later version published by the Free Software
+Foundation; with no Invariant Sections, with no Front-Cover Texts,
+and with no Back-Cover Texts. The full text of the license can be
+found at: http://www.gnu.org/copyleft/fdl.html
+
+This distribution includes a file named fdl.txt that contains the
+text of the GNU Free Documentation License.  If it is missing, you
+can obtain it from www.gnu.org or by writing to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>WTAMU CS Turing Machine Simulator</title>
+<style type="text/css">
+a {
+    color: #0000aa;
+    background-color: #ffffff;
+}
+:visited {
+    color: #000077;
+    background-color: #ffffff;
+}
+body {
+    color: #000000;
+    background-color: #ffffff;
+    margin: 50px 50px 50px 50px;
+    font-family: Verdana,sans-serif;
+}
+h1 {
+    text-align: center;
+    color: #ba2326;
+    background-color: #ffffff;
+}
+img {
+    border: 0;
+}
+p {
+    text-align: justify;
+    font-size: 14px;
+}
+code, pre {
+    color: #050690;
+    background-color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+}
+.copyleft {
+    text-align: center;
+    font-size: small;
+}
+.buttons {
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+</head>
+
+<body>
+
+<h1>WTAMU CS Turing Machine Reference</h1>
+
+<h2>Introduction</h2>
+<p>
+  The Turing Machine simulator allows you to simulate different Turing machines built by you.
+  By specifying the Turing machine's states and state transitions, the execution of the machine
+  can be stepped through or run instantly. The machine can make use of 1, 2, or 3 tapes.
+</p>
+<a href="http://www.alanturing.net/turing_archive/pages/reference%20articles/what%20is%20a%20turing%20machine.html">
+  More information on Turing Machines
+</a>
+
+<h2><br />Syntax Rules</h2>
+<p>
+  To build a Turing machine this application will simulate, the states and state transitions must
+  be specified inside a plain text file. The state transitions can be thought of as a 6-tuple if using
+  multiple tapes, or a 5-tuple if not. In the file, anything after the '#' character is considered a
+  comment and ignored. The state 'halt' is reserved for signifying the machine should halt and thus
+  can only appear in the new state specification.
+</p>
+<pre>
+    <br/>(state name, read symbol, write symbol, move direction, new state, tape switch)<br/>
+</pre>
+<p>
+  The rules for each element in the tuple are as follows:
+</p>
+<ul>
+  <li><strong>state name:</strong> Any alphanumeric string optionally containing an _ except for 'halt'. Examples: state_0, add, search_for</li>
+  <li><strong>read symbol:</strong> Any printable ASCII character</li>
+  <li><strong>write symbol:</strong> Same as read symbol</li>
+  <li><strong>move direction:</strong> 'L' or 'l' for left. 'R' or 'r' for right. 'N' or 'n' for no move</li>
+  <li><strong>new state:</strong> Same as state name, but can include 'halt' to stop the machine</li>
+  <li><strong>tape switch:</strong> (optional) '_' for no switch. '1', '2', '3' to switch to that respective tape</li>
+</ul>
+
+<h2><br/>Example Turing Machines</h2>
+<p>
+  The following are some examples of single tape Turing machines written for this simulator.
+</p>
+
+Erase a binary string:
+<pre>
+  erase 1 _ r erase
+  erase 0 _ r erase
+  erase _ _ n halt
+</pre>
+
+Move to the end of a binary string:
+<pre>
+  move 1 1 r move
+  move 0 0 r move
+  move _ _ l halt
+</pre>
+
+Divide a binary number by 2:
+<pre>
+  moveToEnd 1 1 r moveToEnd
+  moveToEnd 0 0 r moveToEnd
+  moveToEnd _ _ l divBy2
+
+  divBy2 0 _ n halt
+  divBy2 1 _ n halt
+</pre>
+
+Test whether the input is a palindrome:
+<pre>
+  state0 _ _ l state1
+  state0 0 0 r state0
+  state0 1 1 r state0
+
+  state1 _ 1 n halt
+  state1 0 _ l state2
+  state1 1 _ l state4
+
+  state2 _ _ r state3
+  state2 0 0 l state2
+  state2 1 1 l state2
+
+  state3 _ _ n state0
+  state3 0 _ r state0
+  state3 1 1 n state6
+
+  state4 _ _ r state5
+  state4 0 0 l state4
+  state4 1 1 l state4
+
+  state5 _ _ n state0
+  state5 0 0 n state6
+  state5 1 _ r state0
+
+  state6 _ 0 n halt
+  state6 0 _ r state6
+  state6 1 _ r state6
+</pre>
+
+<p>
+  The following example makes use of the multi-tape capabilities of the Turing machine simulator:
+</p>
+
+Count the 1's in a binary string stored on tape 1:
+<pre>
+  count_1s 0 0 r count_1s _
+  count_1s 1 1 n tally 2
+  count_1s _ _ n halt
+
+  tally 1 1 r tally _
+  tally _ 1 n count_1s 1
+</pre>
+
+<br/>
+
+<p class="copyleft">
+<a href="http://www.gnu.org/copyleft/copyleft.html">
+Copyright
+</a> &copy; 2017 West Texas A&M University Computer Science
+
+</p>
+
+</body>
+</html>

@@ -36,6 +36,10 @@ import javafx.scene.control.TextArea;
 import StateDiagram.StateDiagramController;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -102,6 +106,13 @@ public class FXMLDocumentController implements Initializable {
     private WebView sourceCodeView;
     @FXML
     private TextArea syntaxErrorView;
+    @FXML
+    private MenuItem helpContentsMenuItem;
+    @FXML
+    private MenuItem aboutMenuItem;
+    @FXML
+    private MenuItem exitMenuItem;
+    
     private String sourceCodeHtml;
     private boolean sourceViewWindowOpen = false;
     private TMController controller = new TMController();
@@ -110,6 +121,51 @@ public class FXMLDocumentController implements Initializable {
     private StateDiagramController sdController; 
     FileChooser fileChooser = new FileChooser();
     
+    @FXML
+    private void exitApplication() {
+        Platform.exit();
+    }
+    
+    @FXML
+    private void showAboutDialog() {
+        Alert aboutDialog = new Alert(AlertType.INFORMATION);
+        aboutDialog.setTitle("About WTAMU CS Turing Machine");
+        aboutDialog.setHeaderText(null);
+        aboutDialog.setContentText("WTAMU CS Turing Machine Simulator built by team TM-2\n" +
+                                   "\n" +
+                                   "Team Members:\n" +
+                                   "\n" +
+                                   "H. Paul Haiduk - Project Director\n" +
+                                   "Anthony Thornton - Team Member\n" +
+                                   "Zachary Gutierrez - Team Member\n" +
+                                   "Michael Johnson - Team Member");
+        aboutDialog.show();
+    }
+    
+    @FXML
+    private void showHelpContents() {
+        InputStream inputStream =  getClass().getClassLoader().getResourceAsStream(
+                "resources/turingMachineReference.html");
+        String referenceHtml;
+        try(Scanner s = new Scanner(inputStream)) { 
+            referenceHtml = s.useDelimiter("\\A").next();
+        }
+        Parent referenceViewRoot;
+        try {
+            referenceViewRoot = FXMLLoader.load(getClass().getResource("ReferenceView.fxml"));
+            Scene helpContentsScene = new Scene(referenceViewRoot);
+            WebView helpContentsView = (WebView) helpContentsScene.lookup("#referenceView");
+            helpContentsView.getEngine().loadContent(referenceHtml);
+            Stage helpContentsStage = new Stage();
+            helpContentsStage.setScene(helpContentsScene);
+            helpContentsStage.setTitle("Turing Machine Reference");
+            helpContentsStage.show();
+        } catch(IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     /*
     Executes when load button is clicked. This method loads data into the turing machine
     from a file as well as loads the tape text values into the tape fields of the GUI.

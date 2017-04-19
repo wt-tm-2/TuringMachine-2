@@ -1,0 +1,14 @@
+
+#
+# Divide a binary number by 2.
+#
+# Used to test WTAMU CS Turing Machine Simulator by 
+# Michael Johnson, Zach Gutierrez, and Anthony Thornton.
+#
+
+moveToEnd 1 1 r moveToEnd
+moveToEnd 0 0 r moveToEnd
+moveToEnd _ _ l divBy2
+  
+divBy2 0 _ n halt
+divBy2 1 _ n halt
