@@ -185,9 +185,6 @@ public class FXMLDocumentController implements Initializable {
         stepButton1.setDisable(false);
         stopButton1.setDisable(false);
         resetButton1.setDisable(false);
-        input.setEditable(false);
-        input2.setEditable(false);
-        input1.setEditable(false);
         loadButton1.setDisable(false);
         setNextState();
         sdController.drawStateDiagram(sdPane);
