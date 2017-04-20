@@ -134,11 +134,11 @@ public class FXMLDocumentController implements Initializable {
         aboutDialog.setContentText("WTAMU CS Turing Machine Simulator built by team TM-2\n" +
                                    "\n" +
                                    "Team Members:\n" +
-                                   "\n" +
+                                   "\n" + 
                                    "H. Paul Haiduk - Project Director\n" +
                                    "Anthony Thornton - Team Member\n" +
                                    "Zachary Gutierrez - Team Member\n" +
-                                   "Michael Johnson - Team Member");
+                                   "Michael Johnson - Team Member\n\n");
         aboutDialog.show();
     }
     
