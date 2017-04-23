@@ -113,8 +113,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private MenuItem exitMenuItem;
     
-    private String sourceCodeHtml;
-    private boolean sourceViewWindowOpen = false;
+    private SourceView sourceView;
     private TMController controller = new TMController();
     private File currentFile;
     private boolean killThread = false;
@@ -175,7 +174,12 @@ public class FXMLDocumentController implements Initializable {
         controller.resetData();
         Node node = (Node) event.getSource();
         currentFile = fileChooser.showOpenDialog(node.getScene().getWindow());
-        startSourceView();
+        try {
+            sourceView.addContent(currentFile);
+            sourceView.show();
+        } catch(FileNotFoundException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         loadFile();
         sdController.clearPane(sdPane);
         tape.setText(input.getText());
@@ -196,13 +200,13 @@ public class FXMLDocumentController implements Initializable {
     private void loadFile(){
         try {
             controller.loadData(input.getText(),input1.getText(),input2.getText(),initialState.getText(),currentFile.getPath());
-            syntaxErrorView.setText(currentFile.getName() + " compiled successfully.");
+            sourceView.setSyntaxError(currentFile.getName() + " compiled successfully.");
             setInitialState();
             sdController = new StateDiagramController(controller.getStateList());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserException ex) {
-            syntaxErrorView.setText(ex.getMessage());
+            sourceView.setSyntaxError(ex.getMessage());
         }
     }
     /*
@@ -215,6 +219,8 @@ public class FXMLDocumentController implements Initializable {
         loadFile();
         input.setEditable(true);
         tape.setText(input.getText());
+        tape2.setText(input1.getText());
+        tape3.setText(input2.getText());
         startButton1.setDisable(false);
         stepButton1.setDisable(false);
         stopButton1.setDisable(false);
@@ -311,51 +317,6 @@ public class FXMLDocumentController implements Initializable {
         killThread = true;
     }
     
-    private void startSourceView() {
-        try {
-            if (!sourceViewWindowOpen) {
-                Parent sourceViewRoot = FXMLLoader.load(getClass().getResource("SourceView.fxml"));
-                sourceViewScene = new Scene(sourceViewRoot);
-                sourceViewStage = new Stage();
-                sourceViewStage.setOnHiding((event) -> {
-                    sourceViewWindowOpen = false;
-                });
-                sourceViewStage.setScene(sourceViewScene);
-                sourceCodeView = (WebView) sourceViewScene.lookup("#sourceCodeView"); 
-                syntaxErrorView = (TextArea) sourceViewScene.lookup("#syntaxErrorView");
-                syntaxErrorView.setWrapText(true);
-                sourceViewStage.show();
-                sourceViewWindowOpen = true;
-            }
-                writeSourceLines();
-                sourceViewStage.setTitle(currentFile.getName());
-
-        } catch(IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    private void writeSourceLines() throws FileNotFoundException {
-        int lineCount = 0;
-        Scanner scanner = new Scanner(currentFile);
-        StringBuilder sb = new StringBuilder();
-        while (scanner.hasNextLine()) {
-            lineCount++;
-            sb.append("<span id=\"").append(lineCount).append("\">");
-            sb.append(scanner.nextLine());
-            sb.append("</span>");
-        }
-
-        InputStream inputStream =  getClass().getClassLoader().getResourceAsStream(
-                "resources/sourceCodeView.html");
-        try(Scanner s = new Scanner(inputStream)) { 
-            sourceCodeHtml = s.useDelimiter("\\A").next();
-        }
-
-        sourceCodeHtml = sourceCodeHtml.replaceFirst("<!-- user src -->", sb.toString());
-        sourceCodeView.getEngine().loadContent(sourceCodeHtml);
-    }
-    
     /**
  * Gets data from controller and populates the boxes on the GUI that explain the
  * next step on the turing machine
@@ -370,31 +331,9 @@ public class FXMLDocumentController implements Initializable {
         newState.setText(values[4]);
         
         int lineNumber = controller.getNextTransition().getLineNumber();
-        highlight(lineNumber);
+        sourceView.highlight(lineNumber);
     }
-    
-    private void highlight(int lineNumber) {
-        String idLine = "id=\"" + lineNumber + "\"";
-        String highlightStyle = "style=\"background-color:blue;color:white;\"";
-        sourceCodeHtml = sourceCodeHtml.replaceFirst(highlightStyle, "");
-        sourceCodeHtml = sourceCodeHtml.replaceFirst(idLine, idLine + " " + highlightStyle);
-        sourceCodeView.getEngine().getLoadWorker().stateProperty().addListener(
-                (ObservableValue<? extends Worker.State> observable, 
-                        Worker.State oldValue, Worker.State newValue) -> {
-            if( newValue != Worker.State.SUCCEEDED ) {
-                return;
-            }
-            scrollSourceView(lineNumber);
-        });
-        sourceCodeView.getEngine().loadContent(sourceCodeHtml);
-    }
-                
-    private void scrollSourceView(int lineNumber) {
-        String jsAutoScroll = "var ele = document.getElementById(\"" + lineNumber + "\");"
-                + "document.body.scrollTop = ele.offsetTop - 150;";
-        sourceCodeView.getEngine().executeScript(jsAutoScroll);
-    }
-  
+
     private void setInitialState() {
         String[] values = controller.getData();
         initialState.setText(values[0]);
@@ -443,6 +382,11 @@ public class FXMLDocumentController implements Initializable {
         startButton1.setDisable(true);
         stepButton1.setDisable(true);
         resetButton1.setDisable(true);
+        try {
+            sourceView = new SourceView();
+        } catch(IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
 
     

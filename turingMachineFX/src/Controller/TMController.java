@@ -17,7 +17,7 @@ import parser.Transition;
 
 public class TMController {
     
-    private static HashMap<String, State> stateList = new HashMap<>();
+    private static HashMap<String, State> stateList = new HashMap<String, State>();
     private Vector<Character> tape1 = new Vector<Character>();
     private Vector<Character> tape2 = new Vector<Character>();
     private Vector<Character> tape3 = new Vector<Character>();
@@ -27,7 +27,7 @@ public class TMController {
     ArrayList<Transition> trans;
     private int instructionCounter = 0;
     private int currentTape = 1;
-
+    
     //private TMView tmView;
     private int[] index1 = new int[] {0};
     private int[] index2 = new int[] {0};
@@ -35,7 +35,6 @@ public class TMController {
     
     public TMController(){
         //tmView = new TMView(this);
-        
     }
     
     public void disposeTMView(){
