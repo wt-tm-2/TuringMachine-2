@@ -1,5 +1,5 @@
 
-package turingmachinefx;
+package TuringMachineFX;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -63,7 +63,7 @@ public class SourceView {
         
         /* Read in the HTML that will be used to display source files */
         InputStream inputStream =  getClass().getClassLoader().getResourceAsStream(
-                "resources/sourceCodeView.html");
+                "Resources/sourceCodeView.html");
         try(Scanner s = new Scanner(inputStream)) { 
             sourceCodeHTML = s.useDelimiter("\\A").next();
         }

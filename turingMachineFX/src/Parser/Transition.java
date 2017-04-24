@@ -1,5 +1,5 @@
 
-package parser;
+package Parser;
 
 /**
  * Defines a state transition for the Turing Machine.

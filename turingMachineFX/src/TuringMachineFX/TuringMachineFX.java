@@ -1,5 +1,5 @@
 
-package turingmachinefx;
+package TuringMachineFX;
 
 import javafx.application.Application;
 import javafx.application.Platform;

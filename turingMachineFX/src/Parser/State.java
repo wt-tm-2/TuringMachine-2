@@ -1,5 +1,5 @@
 
-package parser;
+package Parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import javafx.scene.shape.Circle;
  * Defines a state in which the Turing Machine simulator can be in.
  * A state consists of a mnemonic name which identifies it, and a list
  * of transitions. 
- * @see parser.Transition
+ * @see Parser.Transition
  * 
  * @author Michael Johnson
  */
@@ -34,7 +34,7 @@ public class State {
     /**
      * Add a transition to the state transition list.
      * @param transition a new transition
-     * @see parser.Transition
+     * @see Parser.Transition
      */
     public void addTransition(Transition transition) {
         stateTransitions.add(transition);

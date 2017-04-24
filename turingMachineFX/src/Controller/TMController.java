@@ -8,11 +8,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
-import parser.Parser;
-import parser.ParserException;
-import parser.State;
-import turingmachinefx.FXMLDocumentController;
-import parser.Transition;
+import Parser.Parser;
+import Parser.ParserException;
+import Parser.State;
+import TuringMachineFX.FXMLDocumentController;
+import Parser.Transition;
 
 
 public class TMController {

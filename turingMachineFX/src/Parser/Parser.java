@@ -1,5 +1,5 @@
 
-package parser;
+package Parser;
 
 import java.util.Scanner;
 import java.io.File;

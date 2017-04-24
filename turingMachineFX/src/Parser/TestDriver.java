@@ -1,5 +1,5 @@
 
-package parser;
+package Parser;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;

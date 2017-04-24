@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package turingmachinefx;
+package TuringMachineFX;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,7 +46,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
-import parser.ParserException;
+import Parser.ParserException;
 
 /**
  *
@@ -144,7 +144,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void showHelpContents() {
         InputStream inputStream =  getClass().getClassLoader().getResourceAsStream(
-                "resources/turingMachineReference.html");
+                "Resources/turingMachineReference.html");
         String referenceHtml;
         try(Scanner s = new Scanner(inputStream)) { 
             referenceHtml = s.useDelimiter("\\A").next();
