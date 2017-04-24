@@ -5,6 +5,7 @@ package Parser;
  * Defines a state transition for the Turing Machine.
  * A state transition consists of the symbol read, the symbol to write,
  * the direction to move the read/write head, and the state to transition to.
+ * It may also contain a tape index for which tape to switch to.
  * 
  * @author Michael Johnson
  */
@@ -18,6 +19,7 @@ public class Transition {
     
     /**
      * Creates a new transition object setting all required data.
+     * 
      * @param readSymbol the current symbol read
      * @param writeSymbol the symbol to write over the read symbol
      * @param direction the direction to move the read/write head after writing

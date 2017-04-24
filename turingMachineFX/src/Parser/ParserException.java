@@ -1,13 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Parser;
 
 /**
- *
- * @author WTSTUDENTS\mj958523
+ * ParserException is used in the Parser class when a syntax error is encountered.
+ * The caller can decided what to do with the exception if parsing the source file
+ * throws this exception. 
+ * 
+ * @author Michael Johnson
  */
 public class ParserException extends Exception {
     

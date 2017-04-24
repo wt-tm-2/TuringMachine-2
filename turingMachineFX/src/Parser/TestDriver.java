@@ -5,7 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 /**
- * Test 
+ * Test driver for the parser. Gives a brief demo of the usage of the HashMap
+ * which stores the Turing Machine States.
  * 
  * @author Michael Johnson
  */
@@ -18,7 +19,7 @@ public class TestDriver {
         /* Demo for the parser */
         /*
         try {
-            HashMap<String, State> stateList = Parser.parseSourceFile("error3.txt");
+            HashMap<String, State> stateList = Parser.parseSourceFile("erase.txt");
             
             /* Loop through the states defined in the source file
             for (State state : stateList.values()) {

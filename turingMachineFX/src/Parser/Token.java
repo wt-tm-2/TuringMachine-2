@@ -46,7 +46,7 @@ public class Token {
         TOKEN_REGEX.put(TAPE, "(_|1|2|3)");  // Match 1, 2 or 3 for tape index or _ for current tape
     }
     
-    /* Description of  tokens */
+    /* Description of  tokens. Used for descriptive syntax errors. */
     public static final String[] TOKEN_DESCRIPTIONS = {
         "state mnemonic",
         "read or write symbol (an ASCII character)",
@@ -58,7 +58,7 @@ public class Token {
     /**
      * Tests whether the lexeme matches the expected token.
      * 
-     * @param token  category the lexeme is expected to belong to (STATE, SYMBOL or DIRECTION) 
+     * @param token  category the lexeme is expected to belong to (STATE, SYMBOL, DIRECTION, etc) 
      * @param lexeme the lexeme to verify
      * @return       true if the lexeme is in the token category, otherwise false 
      */
