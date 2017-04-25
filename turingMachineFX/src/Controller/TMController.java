@@ -8,16 +8,16 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
-import parser.Parser;
-import parser.ParserException;
-import parser.State;
-import turingmachinefx.FXMLDocumentController;
-import parser.Transition;
+import Parser.Parser;
+import Parser.ParserException;
+import Parser.State;
+import TuringMachineFX.FXMLDocumentController;
+import Parser.Transition;
 
 
 public class TMController {
     
-    private static HashMap<String, State> stateList = new HashMap<>();
+    private static HashMap<String, State> stateList = new HashMap<String, State>();
     private Vector<Character> tape1 = new Vector<Character>();
     private Vector<Character> tape2 = new Vector<Character>();
     private Vector<Character> tape3 = new Vector<Character>();
@@ -27,7 +27,7 @@ public class TMController {
     ArrayList<Transition> trans;
     private int instructionCounter = 0;
     private int currentTape = 1;
-
+    
     //private TMView tmView;
     private int[] index1 = new int[] {0};
     private int[] index2 = new int[] {0};
@@ -35,7 +35,6 @@ public class TMController {
     
     public TMController(){
         //tmView = new TMView(this);
-        
     }
     
     public void disposeTMView(){

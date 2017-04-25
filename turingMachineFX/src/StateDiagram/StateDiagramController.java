@@ -19,8 +19,8 @@ import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
-import parser.State;
-import parser.Transition;
+import Parser.State;
+import Parser.Transition;
 
 /**
  *

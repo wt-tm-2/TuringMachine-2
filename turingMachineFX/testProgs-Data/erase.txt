@@ -1,0 +1,12 @@
+
+#
+# This Turing Machine sim program will erase the 1's 
+# in a binary string.
+#
+# Used to test WTAMU CS Turing Machine Simulator by 
+# Michael Johnson, Zach Gutierrez, and Anthony Thornton.
+#
+
+erase 1 _ r erase
+erase 0 _ r erase
+erase _ _ n halt

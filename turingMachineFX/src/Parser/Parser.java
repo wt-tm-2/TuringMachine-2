@@ -1,5 +1,5 @@
 
-package parser;
+package Parser;
 
 import java.util.Scanner;
 import java.io.File;
@@ -8,16 +8,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /**
- * Parses a Turing Machine simulator source file and produces a list of 
- * machine states.
+ * Parser contains a method for reading a Turing Machine simulator source file 
+ * and producing a list of machine states.
  * 
  * Assumptions for the syntax of the TM simulator language:
  * 
- * 1. Comments begin with the '#' character, however this conflicts with the
- *    read and write symbols being any printable ASCII character.
+ * 1. Comments begin with the '#' character.
  * 
  * 2. Each line defines a single state transition in the form of the following tuple:
- *    (state, read symbol, write symbol, move direction, new state)
+ *    (state, read symbol, write symbol, move direction, new state, tape switch (optionally))
  * 
  * @author Michael Johnson
  */
@@ -27,25 +26,27 @@ public class Parser {
      * Map that stores the list of states for the Turing Machine keyed by
      * their mnemonic.
      */
-    private static HashMap<String, State> stateList = new HashMap<>();
+    private static final HashMap<String, State> stateList = new HashMap<>();
     private static int lineCount;  // keep track of what line we are in the file
-    private static StringBuilder syntaxErrors = new StringBuilder();
+    private static final StringBuilder syntaxErrors = new StringBuilder();
     
     /* The expected sequence of tokens */
     private static final int[] TOKEN_SEQUENCE = {
         Token.STATE, Token.SYMBOL, Token.SYMBOL, Token.DIRECTION, Token.STATE,
         Token.TAPE
     };
-    private static final int tokensLength = TOKEN_SEQUENCE.length;
+    private static final int TOKENS_LENGTH = TOKEN_SEQUENCE.length;
     
     /**
      * Parses the source file and produces the state list output.
+     * 
      * @param filePath a path to the source file
      * @return a map containing the Turing Machine states keyed by their mnemonic
      * @throws FileNotFoundException 
      * @throws ParserException
      */
-    public static HashMap<String, State> parseSourceFile(String filePath) throws FileNotFoundException, ParserException {
+    public static HashMap<String, State> parseSourceFile(String filePath) throws 
+            FileNotFoundException, ParserException {
         Scanner sourceFile = new Scanner(new File(filePath));
         lineCount = 0;
         while (sourceFile.hasNextLine()) {
@@ -54,6 +55,7 @@ public class Parser {
         }
         sourceFile.close();
         
+        /* When finished parsing, throw a parser exception if there are syntax errors */
         if (syntaxErrors.length() > 0) {
             throw new ParserException(syntaxErrors.toString());
         }
@@ -62,30 +64,30 @@ public class Parser {
     }
     
     /*
-     Parse a single source file line
-    */
+     * Parse a single source file line
+     */
     private static void parseSourceLine(String sourceLine) {
         if (isCommentLine(sourceLine) | isBlankLine(sourceLine)) {
             return;
         }
         boolean parseError = false;
         String[] lexemes = sourceLine.split("\\s+");
-        for (int i = 0; i < tokensLength - 1; i++) {
+        for (int i = 0; i < TOKENS_LENGTH - 1; i++) {
             if (!Token.lexemeMatches(TOKEN_SEQUENCE[i], lexemes[i])) {
-                printParserError(TOKEN_SEQUENCE[i], lexemes[i]);
+                addParserError(TOKEN_SEQUENCE[i], lexemes[i]);
                 parseError = true;
                 break;
             }
         }
         /* Check for the tape switch if any */
-        if (lexemes.length == tokensLength) {
-            if (!Token.lexemeMatches(TOKEN_SEQUENCE[tokensLength - 1], lexemes[tokensLength - 1])) {
-                printParserError(TOKEN_SEQUENCE[tokensLength - 1], lexemes[tokensLength -1]);
+        if (lexemes.length == TOKENS_LENGTH) {
+            if (!Token.lexemeMatches(TOKEN_SEQUENCE[TOKENS_LENGTH - 1], lexemes[TOKENS_LENGTH - 1])) {
+                addParserError(TOKEN_SEQUENCE[TOKENS_LENGTH - 1], lexemes[TOKENS_LENGTH -1]);
                 parseError = true;
             }
         } else {
-            lexemes = Arrays.copyOf(lexemes, tokensLength);
-            lexemes[tokensLength - 1] = "_";
+            lexemes = Arrays.copyOf(lexemes, TOKENS_LENGTH);
+            lexemes[TOKENS_LENGTH - 1] = "_";
         }
         if (!parseError) {
             addStateTransition(lexemes);
@@ -93,23 +95,23 @@ public class Parser {
     }
     
     /*
-     Check if the source file line is a comment line
-    */
+     * Check if the source file line is a comment line
+     */
     private static boolean isCommentLine(String sourceLine) {
         return Token.lexemeMatches(Token.COMMENT, sourceLine);
     }
     
     /*
-     Check if the source file line is all whitespace or the empty string
-    */
+     * Check if the source file line is all whitespace or the empty string
+     */
     private static boolean isBlankLine(String sourceLine) {
         return sourceLine.matches("(^\\s+$|^$)");
     }
     
     /*
-     Adds the state transition from the source line to the state it belongs to.
-     Creates a new state if the state isn't found in the state list.
-    */
+     * Adds the state transition from the source line to the state it belongs to.
+     * Creates a new state if the state isn't found in the state list.
+     */
     private static void addStateTransition(String[] lexemes) {
         State currentState = stateList.get(lexemes[0]);
         if (currentState == null) {
@@ -125,10 +127,10 @@ public class Parser {
     }
     
     /*
-     Place holder method to print a simple parser error. This will be made
-     more sophisticated in the future.
-    */
-    private static void printParserError(int token, String lexeme) {
+     * Adds a syntax error to the syntax error string builder. The string builder
+     * is used to detail all the syntax errors found in the source file.
+     */
+    private static void addParserError(int token, String lexeme) {
         String error = "Syntax Error Line " + lineCount +": expected a " +
                 Token.TOKEN_DESCRIPTIONS[token] + " but got: " + lexeme;
         syntaxErrors.append(error);

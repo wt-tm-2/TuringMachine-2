@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package turingmachinefx;
+package TuringMachineFX;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,13 +36,17 @@ import javafx.scene.control.TextArea;
 import StateDiagram.StateDiagramController;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
-import parser.ParserException;
+import Parser.ParserException;
 
 /**
  *
@@ -102,14 +106,65 @@ public class FXMLDocumentController implements Initializable {
     private WebView sourceCodeView;
     @FXML
     private TextArea syntaxErrorView;
-    private String sourceCodeHtml;
-    private boolean sourceViewWindowOpen = false;
+    @FXML
+    private MenuItem helpContentsMenuItem;
+    @FXML
+    private MenuItem aboutMenuItem;
+    @FXML
+    private MenuItem exitMenuItem;
+    
+    private SourceView sourceView;
     private TMController controller = new TMController();
     private File currentFile;
     private boolean killThread = false;
     private StateDiagramController sdController; 
     FileChooser fileChooser = new FileChooser();
     
+    @FXML
+    private void exitApplication() {
+        Platform.exit();
+    }
+    
+    @FXML
+    private void showAboutDialog() {
+        Alert aboutDialog = new Alert(AlertType.INFORMATION);
+        aboutDialog.setTitle("About WTAMU CS Turing Machine");
+        aboutDialog.setHeaderText(null);
+        aboutDialog.setContentText("WTAMU CS Turing Machine Simulator built by team TM-2\n" +
+                                   "\n" +
+                                   "Team Members:\n" +
+                                   "\n" + 
+                                   "H. Paul Haiduk - Project Director\n" +
+                                   "Anthony Thornton - Team Member\n" +
+                                   "Zachary Gutierrez - Team Member\n" +
+                                   "Michael Johnson - Team Member\n\n");
+        aboutDialog.show();
+    }
+    
+    @FXML
+    private void showHelpContents() {
+        InputStream inputStream =  getClass().getClassLoader().getResourceAsStream(
+                "Resources/turingMachineReference.html");
+        String referenceHtml;
+        try(Scanner s = new Scanner(inputStream)) { 
+            referenceHtml = s.useDelimiter("\\A").next();
+        }
+        Parent referenceViewRoot;
+        try {
+            referenceViewRoot = FXMLLoader.load(getClass().getResource("ReferenceView.fxml"));
+            Scene helpContentsScene = new Scene(referenceViewRoot);
+            WebView helpContentsView = (WebView) helpContentsScene.lookup("#referenceView");
+            helpContentsView.getEngine().loadContent(referenceHtml);
+            Stage helpContentsStage = new Stage();
+            helpContentsStage.setScene(helpContentsScene);
+            helpContentsStage.setTitle("Turing Machine Reference");
+            helpContentsStage.show();
+        } catch(IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     /*
     Executes when load button is clicked. This method loads data into the turing machine
     from a file as well as loads the tape text values into the tape fields of the GUI.
@@ -119,7 +174,12 @@ public class FXMLDocumentController implements Initializable {
         controller.resetData();
         Node node = (Node) event.getSource();
         currentFile = fileChooser.showOpenDialog(node.getScene().getWindow());
-        startSourceView();
+        try {
+            sourceView.addContent(currentFile);
+            sourceView.show();
+        } catch(FileNotFoundException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         loadFile();
         sdController.clearPane(sdPane);
         tape.setText(input.getText());
@@ -129,9 +189,6 @@ public class FXMLDocumentController implements Initializable {
         stepButton1.setDisable(false);
         stopButton1.setDisable(false);
         resetButton1.setDisable(false);
-        input.setEditable(false);
-        input2.setEditable(false);
-        input1.setEditable(false);
         loadButton1.setDisable(false);
         setNextState();
         sdController.drawStateDiagram(sdPane);
@@ -143,13 +200,13 @@ public class FXMLDocumentController implements Initializable {
     private void loadFile(){
         try {
             controller.loadData(input.getText(),input1.getText(),input2.getText(),initialState.getText(),currentFile.getPath());
-            syntaxErrorView.setText(currentFile.getName() + " compiled successfully.");
+            sourceView.setSyntaxError(currentFile.getName() + " compiled successfully.");
             setInitialState();
             sdController = new StateDiagramController(controller.getStateList());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserException ex) {
-            syntaxErrorView.setText(ex.getMessage());
+            sourceView.setSyntaxError(ex.getMessage());
         }
     }
     /*
@@ -162,6 +219,8 @@ public class FXMLDocumentController implements Initializable {
         loadFile();
         input.setEditable(true);
         tape.setText(input.getText());
+        tape2.setText(input1.getText());
+        tape3.setText(input2.getText());
         startButton1.setDisable(false);
         stepButton1.setDisable(false);
         stopButton1.setDisable(false);
@@ -258,51 +317,6 @@ public class FXMLDocumentController implements Initializable {
         killThread = true;
     }
     
-    private void startSourceView() {
-        try {
-            if (!sourceViewWindowOpen) {
-                Parent sourceViewRoot = FXMLLoader.load(getClass().getResource("SourceView.fxml"));
-                sourceViewScene = new Scene(sourceViewRoot);
-                sourceViewStage = new Stage();
-                sourceViewStage.setOnHiding((event) -> {
-                    sourceViewWindowOpen = false;
-                });
-                sourceViewStage.setScene(sourceViewScene);
-                sourceCodeView = (WebView) sourceViewScene.lookup("#sourceCodeView"); 
-                syntaxErrorView = (TextArea) sourceViewScene.lookup("#syntaxErrorView");
-                syntaxErrorView.setWrapText(true);
-                sourceViewStage.show();
-                sourceViewWindowOpen = true;
-            }
-                writeSourceLines();
-                sourceViewStage.setTitle(currentFile.getName());
-
-        } catch(IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    private void writeSourceLines() throws FileNotFoundException {
-        int lineCount = 0;
-        Scanner scanner = new Scanner(currentFile);
-        StringBuilder sb = new StringBuilder();
-        while (scanner.hasNextLine()) {
-            lineCount++;
-            sb.append("<span id=\"").append(lineCount).append("\">");
-            sb.append(scanner.nextLine());
-            sb.append("</span>");
-        }
-
-        InputStream inputStream =  getClass().getClassLoader().getResourceAsStream(
-                "resources/sourceCodeView.html");
-        try(Scanner s = new Scanner(inputStream)) { 
-            sourceCodeHtml = s.useDelimiter("\\A").next();
-        }
-
-        sourceCodeHtml = sourceCodeHtml.replaceFirst("<!-- user src -->", sb.toString());
-        sourceCodeView.getEngine().loadContent(sourceCodeHtml);
-    }
-    
     /**
  * Gets data from controller and populates the boxes on the GUI that explain the
  * next step on the turing machine
@@ -317,31 +331,9 @@ public class FXMLDocumentController implements Initializable {
         newState.setText(values[4]);
         
         int lineNumber = controller.getNextTransition().getLineNumber();
-        highlight(lineNumber);
+        sourceView.highlight(lineNumber);
     }
-    
-    private void highlight(int lineNumber) {
-        String idLine = "id=\"" + lineNumber + "\"";
-        String highlightStyle = "style=\"background-color:blue;color:white;\"";
-        sourceCodeHtml = sourceCodeHtml.replaceFirst(highlightStyle, "");
-        sourceCodeHtml = sourceCodeHtml.replaceFirst(idLine, idLine + " " + highlightStyle);
-        sourceCodeView.getEngine().getLoadWorker().stateProperty().addListener(
-                (ObservableValue<? extends Worker.State> observable, 
-                        Worker.State oldValue, Worker.State newValue) -> {
-            if( newValue != Worker.State.SUCCEEDED ) {
-                return;
-            }
-            scrollSourceView(lineNumber);
-        });
-        sourceCodeView.getEngine().loadContent(sourceCodeHtml);
-    }
-                
-    private void scrollSourceView(int lineNumber) {
-        String jsAutoScroll = "var ele = document.getElementById(\"" + lineNumber + "\");"
-                + "document.body.scrollTop = ele.offsetTop - 150;";
-        sourceCodeView.getEngine().executeScript(jsAutoScroll);
-    }
-  
+
     private void setInitialState() {
         String[] values = controller.getData();
         initialState.setText(values[0]);
@@ -390,6 +382,11 @@ public class FXMLDocumentController implements Initializable {
         startButton1.setDisable(true);
         stepButton1.setDisable(true);
         resetButton1.setDisable(true);
+        try {
+            sourceView = new SourceView();
+        } catch(IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
 
     
