@@ -33,18 +33,14 @@ public class StateDiagramController {
         stateList = sl;
     }
     
-    private static double positions [][] = {
-        {400, 100 },
-        {600, 150},
-        {800, 300},
-        {600, 450},
-        {400, 500},
-        {200, 450},
-        {100, 300},
-        {200, 150},
-        {150, 300}
-    };
+    private static double positions [][] = new double[20][2];
     public void drawStateDiagram(Pane sdPane){
+        
+        int angle = 360/stateList.size();
+        for(int ind=0; ind<stateList.size(); ind++){
+            positions[ind][0]= 425 + 340*Math.cos(Math.toRadians(angle*ind));
+            positions[ind][1]= 300 + 240*Math.sin(Math.toRadians(angle*ind));
+        }
 
         int i=0;
         for(State state : stateList.values()){

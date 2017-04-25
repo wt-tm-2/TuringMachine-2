@@ -101,9 +101,9 @@
                   <Label layoutX="26.0" layoutY="290.0" text="State Diagram:" />
                   <Label layoutX="1034.0" layoutY="288.0" text="Instruction Count:" />
                   <Label fx:id="instructionCount" layoutX="1159.0" layoutY="288.0" text="0" />
-                  <ScrollPane layoutX="14.0" layoutY="316.0" prefHeight="581.0" prefViewportHeight="581.0" prefViewportWidth="867.0" prefWidth="1000.0">
+                  <ScrollPane layoutX="14.0" layoutY="316.0" prefHeight="581.0" prefViewportHeight="581.0" prefViewportWidth="867.0" prefWidth="867.0">
                      <content>
-                        <Pane fx:id="sdPane" layoutX="14.0" layoutY="316.0" prefHeight="581.0" prefWidth="867.0" />
+                        <Pane fx:id="sdPane" layoutX="14.0" layoutY="316.0" prefHeight="581.0" prefWidth="1000.0" />
                      </content>
                   </ScrollPane>
                   <TextField id="tape" fx:id="tape2" alignment="CENTER" editable="false" layoutX="95.0" layoutY="87.0" prefHeight="55.0" prefWidth="1100.0">
