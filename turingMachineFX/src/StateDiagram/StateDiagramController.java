@@ -1,7 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *   StateDiagramController is a public class to be called from FXMLDocumentController.java
+ *   PRECONDITIONS: This class assumes that the HashMap passed to it upon instantiation has been 
+ *   populated. It also assumes that a Pane used for the state diagram exists.
+ *   POSTCONDITIONS: Based upon the assumptions, the public methods, drawStateDiagram and 
+ *   clearPane, will draw on and clear the correct Pane of the GUI respectively.
  */
 package StateDiagram;
 
@@ -27,21 +29,40 @@ import Parser.Transition;
  * @author Zach Gutierrez
  */
 public class StateDiagramController {
+    //HashMap used for getting the states
     private static HashMap<String, State> stateList;
     
+    /**
+        * 
+        * @param sl is a HashMap<String, State> that has already been populated
+        * POSTCONDITION: The instance of StateDiagramController has access to the HashMap of States
+        * 
+        */
     public StateDiagramController(HashMap<String, State> sl){
         stateList = sl;
     }
     
     private static double positions [][] = new double[20][2];
+    
+    /**
+        *   The method drawStateDiagram draws a state diagram which is a graphical representation of the 
+        *   source code for the Turning Machine.
+        * 
+        * @param sdPane is the JavaFX class Pane used to draw the state diagram.
+        *   PRECONDITION: sdPane is a Pane that already exists.
+        *   POSTCONDITION: A state transition diagram is drawn in the sdPane using the Circle attributes
+        *   from the class State.java. Each Circle represents a state, and the lines connecting the Circles 
+        *   represent the transitions.
+        */
     public void drawStateDiagram(Pane sdPane){
         
+        //Distribute the States evenly around an ellipse
         int angle = 360/stateList.size();
         for(int ind=0; ind<stateList.size(); ind++){
             positions[ind][0]= 425 + 340*Math.cos(Math.toRadians(angle*ind));
             positions[ind][1]= 300 + 240*Math.sin(Math.toRadians(angle*ind));
         }
-
+        //Initialize the positions of the States
         int i=0;
         for(State state : stateList.values()){
             state.setGraphicAttributes(positions[i][0], positions[i][1], 25);
@@ -49,6 +70,8 @@ public class StateDiagramController {
             i++;
         }
         
+        //Draw the transitions first so when the states are drawn, the states cover the lines going
+        //to the center of the Circles
         for(State state  : stateList.values()){
             String [] nextStates = getTransitionState(state);
             if(nextStates[0]!=null){
@@ -69,7 +92,10 @@ public class StateDiagramController {
                 }
             }
         }
-        drawLabels(sdPane);
+        //Draw the labels for the transitions
+        setLabels(sdPane);
+        
+        //Draw the labeled states last
         for(State state: stateList.values()){
             Label label = new Label(state.getStateMnemonic());
             label.setTextFill(Color.BLACK);
@@ -79,6 +105,12 @@ public class StateDiagramController {
         }
     }
     
+    /*
+        *  This method gets each of the states the current state can transition to.
+        *  It returns a String array with the state mneumonics of the states being transitioned to.
+        *  PRECONDITION: State state is a state that exists.
+        *  POSTCONDITION: newStates is a String array of the states the current state can transition to.
+        */
     private String [] getTransitionState(State state){
         ArrayList<Transition> trans = state.getStateTransitions();
         String [] newStates = new String[trans.size()];
@@ -88,7 +120,11 @@ public class StateDiagramController {
         return newStates;
     }
     
-    
+    /*
+        *  This method connects States with a straight line.
+        *  PRECONDITION: Circles c1 and c2 both exist, and sdPane is an existing Pane able to be draw on.
+        *  POSTCONDITION: A line is drawn between the circles which is bound by the circles' centers.
+        */
     private void connectCircles(Circle c1, Circle c2, Pane sdPane){
         Line line = new Line();
         line.startXProperty().bind(c1.centerXProperty());
@@ -98,7 +134,13 @@ public class StateDiagramController {
         sdPane.getChildren().add(line);
     }
 
-    
+    /*
+        *  This method draws a loop from a circle back to itself to represent a state transitioning back to
+        *  itself. 
+        *  PRECONDTION: Circle c1 and Pane sdPane exist.
+        *  POSTCONDITION: The loop is draw either above or below the circle, depending on the value of
+        *  y passed to the method. y represents the y coordinate the circle's center is located.
+        */
     private void drawLoop(Circle c1, int y, Pane sdPane){
         Arc arc = new Arc();
         double startAngle = 180*y;
@@ -112,9 +154,13 @@ public class StateDiagramController {
         arc.setStartAngle(startAngle);
         arc.setLength(180);
         sdPane.getChildren().add(arc);
-        
     }
     
+    /*
+        *  This method draws labels along a tranisition line in the state diagram. 
+        *  PRECONDITION: Circles c1 and c2 and Label trans all exist.
+        *  POSTCONDITION: The Label trans is drawn along a line connecting Circles c1 and c2.
+        */
     private void drawLabel(Circle c1, Circle c2, Label trans){
         double angle;
         if(c2.getCenterX()==c1.getCenterX())
@@ -127,6 +173,11 @@ public class StateDiagramController {
         trans.getTransforms().add(new Rotate(angle,0,0));
     }
     
+    /*
+        *  This method draws a Label on an arc in the state diagram.
+        *  PRECONDITION: Circle c1 and Label trans exist.
+        *  POSTCONDITION: An arc in the state diagram is labeled.
+        */
     private void drawArcLabel(Circle c1, Label trans){
         double y;
         if(c1.getCenterY() > 300)
@@ -137,7 +188,14 @@ public class StateDiagramController {
         trans.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
     }
     
-    private void drawLabels(Pane sdPane){
+    /*
+        *  This method gets the transition values and adds them to the Label for each transition line. 
+        *  Each Label is given an id, which is how a label is updated.
+        *  PRECONDITION: The states exist in the Pane sdPane, and the states have transition values.
+        *  POSTCONDITION: The Labels are added to sdPane along the correct transition line with the 
+        *  correct transition values.
+        */
+    private void setLabels(Pane sdPane){
         setLabelIds(sdPane);
         String lineLabel;
         String arcLabel;
@@ -154,6 +212,7 @@ public class StateDiagramController {
                 }
                 else{
                     if(nextStates[i].equalsIgnoreCase("halt")){
+                        //Do nothing. The halt state is not a valid state.
                     }
                     else{
                         Label transLabel = (Label) sdPane.lookup("#"+state.getStateMnemonic()+"To"+nextStates[i]);
@@ -165,6 +224,7 @@ public class StateDiagramController {
                     }
                 }
                 if(nextStates[i].equalsIgnoreCase("halt")){
+                    //Do nothing. The halt state is not a valid state.
                 }
                 else{                   
                     if(state.getStateMnemonic().equalsIgnoreCase(nextStates[i])){
@@ -179,6 +239,12 @@ public class StateDiagramController {
         }
     }
     
+    /*
+        *  This method sets the Label ids to the format  "<currentState>To<nextState>", where
+        *  currentState and nextState are the state mneumonics.
+        *  PRECONDITION: Pane sdPane exists, and State state exists.
+        *  POSTCONDITION: Each transition label is initialized and added to the Pane but is not visible yet.
+        */
     private void setLabelIds(Pane sdPane){
         for(State state : stateList.values()){
             String [] nextStates = getTransitionState(state);
@@ -194,7 +260,12 @@ public class StateDiagramController {
             }
         }    
     }
-       
+    
+    /*
+        *  This method clears the Pane of all nodes. It is used to "reset" the state diagram.
+        *  PRECONDITION: Pand sdPane exists.
+        *  POSTCONDITION: The Pane is cleared of all nodes.
+        */
     public void clearPane(Pane sdPane){
         sdPane.getChildren().clear();
     }
