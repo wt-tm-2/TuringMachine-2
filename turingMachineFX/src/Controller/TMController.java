@@ -92,9 +92,11 @@ public class TMController {
         currentTape = 1;
         }
     }
-    /*
-    Checks on which tape is the current tape and performs a step on the turing machine
-    */
+    /**
+     * Checks on which tape is the current tape and performs a step on the turing machine.
+     */
+     
+    
     public int step(){
         int x = 0;
         if (currentTape == 1){
@@ -148,8 +150,8 @@ public class TMController {
         return 0;
         }
     }
-    /*
-    Prepares the next instruction to be able to be executed next time stepPart1 is called
+    /**
+    * Prepares the next instruction to be able to be executed next time stepPart1 is called.
     */
     public int stepPart2(int[] index, Vector<Character> tape){
         if (tape.size() == index[0]){
@@ -167,7 +169,10 @@ public class TMController {
         instructionCounter++;
         return 0;
     }
-    
+    /**
+     * 
+     * @return A String array containing the next instruction to be executed. 
+     */
     public String[] getData(){
         String[] data = new String[5];
         data[0] = currentState;

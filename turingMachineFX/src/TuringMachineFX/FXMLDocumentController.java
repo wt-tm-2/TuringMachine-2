@@ -165,7 +165,7 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    /*
+    /**
     Executes when load button is clicked. This method loads data into the turing machine
     from a file as well as loads the tape text values into the tape fields of the GUI.
     */
@@ -209,7 +209,7 @@ public class FXMLDocumentController implements Initializable {
             sourceView.setSyntaxError(ex.getMessage());
         }
     }
-    /*
+    /**
     Executes when reset button is clicked. Resets data back to as if the file was
     just loaded but no execution of the code has been performed.
     */
@@ -227,7 +227,7 @@ public class FXMLDocumentController implements Initializable {
         instructionCount.setText("0");
         loadButton1.setDisable(false);
 }
-    /*
+    /**
     Executes when step button is clicked. Calls the controller to step the program and
     then sets the values of the instruction counter and current tape fields. Also, halts the program if 
     the next state is the halt state.
@@ -308,7 +308,7 @@ public class FXMLDocumentController implements Initializable {
             }  
             }.start();
     }
-    /*
+    /**
     Executes when stop button is clicked. Changes the value of a global variable to stop
     execution of the loop in the thread created by the run method.
     */
@@ -318,9 +318,9 @@ public class FXMLDocumentController implements Initializable {
     }
     
     /**
- * Gets data from controller and populates the boxes on the GUI that explain the
- * next step on the turing machine
- */
+    * Gets data from controller and populates the boxes on the GUI that explain the
+    * next step on the turing machine.
+     */
     @FXML
     public void setNextState(){
         String[] values = controller.getData();
@@ -365,7 +365,7 @@ public class FXMLDocumentController implements Initializable {
         tape3.setText(newTape);
         
     }
-    /*
+    /**
     Executes when halt state is reached. Disables buttons requiring the reset button
     to be clicked to execute the code again.
     */
