@@ -90,7 +90,7 @@ public class SourceView {
      * 
      * @param sourceFile A File object which points to the source code that will
      *                   be loaded
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException if HTML for source content isn't found
      */
     public void addContent(File sourceFile) throws FileNotFoundException {
         int lineCount = 0;

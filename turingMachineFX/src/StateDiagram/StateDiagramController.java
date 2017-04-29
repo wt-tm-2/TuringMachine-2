@@ -34,7 +34,7 @@ public class StateDiagramController {
     
     /**
         * 
-        * @param sl is a HashMap<String, State> that has already been populated
+        * @param sl is a HashMap of State objects that has already been populated
         * POSTCONDITION: The instance of StateDiagramController has access to the HashMap of States
         * 
         */

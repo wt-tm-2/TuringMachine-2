@@ -42,8 +42,8 @@ public class Parser {
      * 
      * @param filePath a path to the source file
      * @return a map containing the Turing Machine states keyed by their mnemonic
-     * @throws FileNotFoundException 
-     * @throws ParserException
+     * @throws FileNotFoundException if file containing source code doesn't exist
+     * @throws ParserException if syntax error(s) encountered
      */
     public static HashMap<String, State> parseSourceFile(String filePath) throws 
             FileNotFoundException, ParserException {

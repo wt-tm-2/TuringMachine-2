@@ -13,7 +13,7 @@ import javafx.scene.shape.Circle;
  * 
  * Note: This class now also defines some graphic properties for the state.
  * 
- * @see Parser.Transition
+ * @see Transition
  * 
  * @author Michael Johnson
  * @author Zach Gutierrez
@@ -42,7 +42,7 @@ public class State {
      * Add a transition to the state transition list.
      * 
      * @param transition a new transition
-     * @see Parser.Transition
+     * @see Transition
      */
     public void addTransition(Transition transition) {
         stateTransitions.add(transition);

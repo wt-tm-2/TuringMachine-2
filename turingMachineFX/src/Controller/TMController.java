@@ -44,11 +44,11 @@ public class TMController {
     /**
      * Takes data from the view and stores it to be used in the main logic
      * of the code. Then uses this data to find the state and prepare the
-     * turing machine for execution.
-     * @param tape2 the tape initially entered in the text box on GUI
+     * Turing machine for execution.
+     * @param Gtape2 the tape initially entered in the text box on GUI
      * @param IS the initial state entered in the text box on the GUI
-     * @throws FileNotFoundException
-     * @throws ParserException
+     * @throws FileNotFoundException if source file doesn't exist
+     * @throws ParserException if syntax error(s) are encountered
      */
     
     public void loadData(String Gtape1, String Gtape2, String Gtape3, String IS, 
