@@ -1,0 +1,71 @@
+---------------------------------------------------------------------------
+-- WTAMU CS Turing Machine 2 2016                                        --
+-- Turing Machine simulator created with Java for CS-4391-01             --
+--                                                                       --
+-- Group members: Anthony Thornton                                       --
+--                Michael Johnson                                        --
+--                Zachary Gutierrez                                      --
+---------------------------------------------------------------------------
+                README file for the Turing Machine 2 project
+
+PACKAGE OVERVIEW:
+
+You should be reading this file in a directory called TuringMachine2.
+There should be a file called `turingMachineFX.jar' which can be executed
+to run the latest build of our Turing machine project.
+
+    $ java -jar turingMachineFX.jar
+
+There should also be a subdirectory called `turingMachineFX'. This directory
+contains a NetBeans project. 
+
+Some example programs exist in `turingMachineFX/testProgs-Data/'.
+
+DOCUMENTATION:
+
+The Javadoc for this project exists in `turingMachineFX/dist/javadoc'.
+
+DEPENDENCIES:
+
+Our project only relies on JavaFX for the GUI. Everything else uses base
+Java 8.
+
+BUILDING OR EDITING:
+
+To build or edit this project in NetBeans, simply import the 
+`turingMachineFX' directory as a NetBeans project. If you wish to use
+another Java IDE or edit the source code from a text editor, all the
+source files can be extracted from the `turingmachineFX/src' directory.
+
+SOURCE OVERVIEW:
+
+The Java source code for this project is organized into the following
+packages:
+
+  * Controller      Contains the class TMController which acts as the
+                    interpreter for the simulator.
+
+  * Parser          Contains the parser module which is a collection
+                    of classes used to read a Turing machine source
+                    file into a Java HashMap. This is used throughout
+                    the project.
+
+  * Resources       Contains some HTML files. One is used to display
+                    the loaded Turing machine source code. The other
+                    contains some documentation that can be accessed
+                    while the application is running from menu bar.
+
+  * StateDiagram    Contains the state diagram module which is a class
+                    that builds and displays a visual representation
+                    of the Turing machine source that is loaded.
+
+  * TuringMachineFX Contains the GUI module. A collection of classes
+                    and FXML files that define the structure and behavior
+                    of the application's user interface.
+
+FINAL NOTES:
+
+We recommend using SceneBuilder to edit the JavaFX FXML files that define
+the user interface. SceneBuilder provides a drag-and-drop interface to
+build the GUI visually.
+
